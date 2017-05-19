@@ -1,0 +1,12 @@
+---
+
+- name: Install cherrypi
+  pip:
+    name: CherryPy
+
+- name: Install requirements for pybonjour
+  apt: name=libavahi-compat-libdnssd1 state=installed
+
+- name: Install pybonjour
+  pip:
+    name: https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/pybonjour/pybonjour-1.1.1.zip

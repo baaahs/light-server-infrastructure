@@ -1,0 +1,41 @@
+---
+
+- name: disable onboard audio
+  lineinfile:
+    path: /boot/config.txt
+    regexp: '^dtparam=audio'
+    line: 'dtparam=audio=off'
+
+- name: set GPU memory allocation to zero
+  lineinfile:
+    path: /boot/config.txt
+    regexp: '^gpu_mem'
+    line: 'gpu_mem=0'
+
+- name: set SD card clockspeed to {{sd_card_overlock}}mhz
+  lineinfile:
+    path: /boot/config.txt
+    insertafter: EOF
+    line: 'dtparam=sd_overclock={{sd_card_overlock}}'
+
+- name: disable on-board bluetooth and wifi
+  blockinfile:
+    path: /boot/config.txt
+    insertafter: EOF
+    block: |
+      dtoverlay=pi3-disable-bt
+      dtoverlay=pi3-disable-wifi
+
+- name: disable on-board bluetooth and wifi
+  template:
+    src: raspi-pi3-blacklist.conf.j2
+    dest: /etc/modprobe.d/raspi-pi3-blacklist.conf
+    owner: root
+    group: root
+    mode: 'u=rw,g=r,o=r'
+
+- name: disable hciuart
+  systemd:
+    name: hciuart
+    enabled: no
+    state: stopped

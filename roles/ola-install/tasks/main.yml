@@ -1,0 +1,42 @@
+---
+
+- name: Install packages required to compile openlighting alliance source
+  apt: name={{item}} state=installed
+  with_items:
+       - debhelper
+       - autotools-dev
+       - dh-autoreconf
+       - bash-completion
+       - libcppunit-dev
+       - bison
+       - flex
+       - pkg-config
+       - uuid-dev
+       - python
+       - python-protobuf
+       - python-numpy
+       - libprotobuf-dev
+       - protobuf-compiler
+       - libprotoc-dev
+       - libusb-1.0-0-dev
+       - libftdi-dev
+       - liblo-dev
+       - libmicrohttpd-dev
+       - libncurses5-dev
+
+- name: Download and extract openlighting alliance source code
+  unarchive:
+    src: https://github.com/OpenLightingProject/ola/releases/download/0.10.3/ola-0.10.3.tar.gz
+    dest: /tmp
+    remote_src: True
+
+#
+#- name: Build openlighting alliance source code
+#  command: >
+#    make prefix={{ git_install_path }} {{ item }}
+#    chdir={{ workspace }}/git-{{ git_version }}
+#  with_items:
+#    - all
+#    - install
+#  when:  git_installed_version|failed or git_reinstall_from_source
+#  become: yes
