@@ -2,8 +2,9 @@
 
 - hosts: raspberry-pi-3-access-point
   roles:
-    - basic-init
+    - setup
     - performance-optimizations
+    - endurance-optimizations
 #    - ola-install
     - baaahs-lights-server-install
   become: yes

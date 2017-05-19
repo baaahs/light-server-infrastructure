@@ -1,0 +1,64 @@
+- name: Disable swapfile
+  shell: dphys-swapfile swapoff
+  ignore_errors: True
+  tags: removing
+
+- name: Remove swapfile and other unnecessary packages
+  apt:
+    pkg: "{{ item }}"
+    state: absent
+    purge: yes
+    autoremove: yes
+  with_items:
+    - dphys-swapfile
+    - rsyslog
+
+# source: https://hallard.me/raspberry-pi-read-only/
+- name: Install packages
+  apt:
+    pkg: "{{ item }}"
+    state: latest
+    cache_valid_time: 3600
+  with_items:
+    - busybox-syslogd
+    - ntp
+
+# source: http://raspberrypi.stackexchange.com/a/14094/48178
+- name: Update tmpfs defaults
+  lineinfile:
+    dest: /etc/default/tmpfs
+    regexp: '^#?{{ item.key }}=(.*)$'
+    line: '{{ item.key }}={{ item.value }}'
+    state: present
+  with_items:
+    - { key: 'RAMLOCK', value: 'yes' }
+    - { key: 'RAMSHM', value: 'yes' }
+    - { key: 'RAMTMP', value: 'yes' }
+    - { key: 'TMPFS_SIZE', value: '10%VM' }
+    - { key: 'RUN_SIZE', value: '10M' }
+    - { key: 'LOCK_SIZE', value: '5M' }
+    - { key: 'SHM_SIZE', value: '10M' }
+    - { key: 'TMP_SIZE', value: '25M' }
+
+- name: Update fstab
+  lineinfile:
+    dest: /etc/fstab
+    line: '{{ item }}'
+  with_items:
+    - "tmpfs   /var/log                tmpfs   size=20M,defaults,noatime,mode=0755 0 0"
+    - "tmpfs   /var/cache/apt/archives tmpfs   size=100M,defaults,noexec,nosuid,nodev,mode=0755 0 0"
+    - "tmpfs   /var/spool/cups         tmpfs   size=100M,defaults,noatime,mode=0755 0 0"
+    - "tmpfs   /var/spool/cups/tmp     tmpfs   defaults,noatime,mode=0755 0 0"
+
+- name: Update prepare-dirs script
+  template:
+    src: ./templates/prepare-dirs.j2
+    dest: /etc/init.d/prepare-dirs
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Enable prepare-dirs on startup
+  service:
+    name: prepare-dirs
+    enabled: yes
