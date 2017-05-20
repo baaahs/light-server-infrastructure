@@ -1,0 +1,19 @@
+---
+
+- name: restart dnsmasq
+  service: name=dnsmasq state=restarted
+
+- name: restart hostapd
+  service: name=hostapd state=restarted
+
+- name: save iptables
+  shell: 'iptables-save > /etc/iptables.ipv4.nat'
+
+- name: ifdown wlan
+  shell: "ifdown wlan0"
+
+- name: ifup wlan
+  shell: "ifup wlan0"
+
+- name: set forwarding rule
+  shell: "echo 1 > /proc/sys/net/ipv4/ip_forward"

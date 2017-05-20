@@ -1,5 +1,11 @@
 ---
 
+- name: Detect if olad is already installed
+  command: which olad
+  changed_when: false
+  failed_when: false
+  register: ola_installed
+
 - name: Install packages required to compile openlighting alliance source
   apt: name={{item}} state=installed
   with_items:
@@ -23,14 +29,15 @@
        - liblo-dev
        - libmicrohttpd-dev
        - libncurses5-dev
+  when: ola_installed|failed
 
 - name: Download and extract openlighting alliance source code
   unarchive:
     src: https://github.com/OpenLightingProject/ola/releases/download/0.10.3/ola-0.10.3.tar.gz
     dest: /tmp
     remote_src: True
+  when: ola_installed|failed
 
-#
 #- name: Build openlighting alliance source code
 #  command: >
 #    make prefix={{ git_install_path }} {{ item }}
