@@ -20,7 +20,7 @@
     line: 'XKBLAYOUT="{{ keyboard_layout }}"'
   register: keyboard_layout_result
 
-- name: activate keyboard layout
+- name: activate keyboard layout {{ keyboard_layout }}
   shell: "dpkg-reconfigure -f noninteractive keyboard-configuration"
   when: keyboard_layout_result.changed
 
@@ -39,3 +39,12 @@
 
 - name: run rpi-update
   shell: rpi-update
+
+- name: Adding banner info in sshd.conf
+  lineinfile: dest=/etc/ssh/sshd_config regexp='#Banner /etc/issue.net' line="Banner /etc/issue.net"
+
+- name: Update ssh banner
+  template: src=ssh-banner.j2 dest=/etc/issue.net
+
+- name: Restart ssh
+  service: name=ssh state=restarted

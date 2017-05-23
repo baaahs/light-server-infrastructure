@@ -1,0 +1,57 @@
+---
+
+- name: enable the ARM I2C interface
+  lineinfile:
+    path: /boot/config.txt
+    regexp: '^#dtparam=i2c_arm'
+    line: 'dtparam=i2c_arm=on'
+
+- name: Install python RPI GPIO
+  apt: name=python-rpi.gpio state=installed
+
+- name: Install packages required to compile openlighting alliance source
+  apt: name={{item}} state=installed
+  with_items:
+       - python-dev
+       - python-serial
+       - python-smbus
+       - python-jinja2
+       - python-xmltodict
+       - python-psutil
+
+- name: Install xmltodict
+  pip:
+    name: xmltodict
+
+- name: clone PiModules project
+  git:
+    repo: 'https://github.com/modmypi/PiModules.git'
+    dest: /tmp/pymodules
+
+- name: Install the System Monitoring & File Safe Shutdown Daemons
+  command: python setup.py install
+  args:
+    chdir: /tmp/pymodules/code/python/upspico/picofssd
+
+#    update-rc.d picofssd defaults
+
+#    update-rc.d picofssd enable
+
+- name: Install the UPS PIco HV3.0 Hardware RTC
+  apt: name=i2c-tools state=installed
+
+- name: Enable modules
+  blockinfile:
+    path: /etc/modules
+    insertbefore: EOF
+    block: |
+      i2c-bcm2708
+      rtc-ds1307
+
+- name: Enable modules
+  blockinfile:
+    path: /etc/modules
+    insertbefore: exit 0
+    block: |
+      echo ds1307 0x68 > /sys/class/i2c-adapter/i2c-1/new_device
+      ( sleep 4; hwclock -s ) &
