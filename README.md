@@ -17,6 +17,7 @@ The parts required to build a server include:
 - [UPS PIco HV3.0A 450 mAh Stack](http://www.pimodulescart.com/shop/item.aspx?itemid=30)
 - [SanDisk Extreme 16GB UHS-I/U3 Micro SDHC Memory Card](https://www.amazon.com/gp/product/B00M55BX3G)
 - [DMXking ultraDMX Micro USB DMX adapter/dongle](https://www.amazon.com/gp/product/B00T8OKM98/)
+- [CanaKit 5V 2.5A Raspberry Pi 3 Power Supply / Adapter / Charger (UL Listed)](https://www.amazon.com/CanaKit-Raspberry-Supply-Adapter-Charger/dp/B00MARDJZ4/)
 
 # SERVER BUILD
 To build a server do the following:
