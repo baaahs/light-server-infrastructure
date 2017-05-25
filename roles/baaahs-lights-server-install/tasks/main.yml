@@ -1,8 +1,18 @@
 ---
 
+- name: Add baaahs user
+  user:
+    name: '{{ baaahs_primary_username }}'
+    shell: /bin/bash
+    groups: sudo
+    append: yes
+    password: '{{ baaahs_primary_password }}'
+
 - name: Install cherrypi
   pip:
     name: CherryPy
+  become: true
+  become_user: '{{ baaahs_primary_username }}'
 
 - name: Install requirements for pybonjour
   apt: name=libavahi-compat-libdnssd1 state=installed
@@ -10,3 +20,19 @@
 - name: Install pybonjour
   pip:
     name: https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/pybonjour/pybonjour-1.1.1.zip
+  become: true
+  become_user: '{{ baaahs_primary_username }}'
+
+- name: Clone master branch of BAAAHS lights
+  git:
+    repo: 'https://github.com/baaahs/lights.git'
+    dest: '~/{{ baaahs_git_install_local_dir }}'
+    version: master
+  become: true
+  become_user: '{{ baaahs_primary_username }}'
+
+- name: install baaahs_lights systemd unit file
+  template: src=baaahs_lights.j2 dest=/etc/systemd/system/baaahs_lights.service
+
+#- name: start baaahs_lights
+#  systemd: state=started name=baaahs_lights daemon_reload=yes

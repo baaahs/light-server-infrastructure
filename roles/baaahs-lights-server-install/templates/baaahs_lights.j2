@@ -1,0 +1,12 @@
+[Unit]
+Description=BAAAHS Lights
+After=network.target
+
+[Service]
+ExecStart=python /home/{{baaahs_primary_username}}/{{baaahs_git_install_local_dir}}/go.py
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
