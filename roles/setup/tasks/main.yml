@@ -34,8 +34,8 @@
     - vim
     - htop
     - python-pip
-    - ola
-    - ola-python
+    - lsof
+    - tree
 
 - name: run rpi-update
   shell: rpi-update

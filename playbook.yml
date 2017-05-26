@@ -5,7 +5,8 @@
     - setup
     - performance-optimizations
     - endurance-optimizations
-    - baaahs-lights-server-install
     - wifi-access-point-configuration
     - ups-pico-setup
+    - ola-install
+    - baaahs-lights-server-install
   become: yes

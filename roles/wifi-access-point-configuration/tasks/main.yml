@@ -24,39 +24,6 @@
     insertafter: '^#DAEMON_CONF='
     line: 'DAEMON_CONF="/etc/hostapd/hostapd.conf"'
 
-- name: Route traffic externall out over eth0 (this will change, as the PI will not serve as a true router)
-  iptables:
-    table: nat
-    chain: POSTROUTING
-    out_interface: eth0
-    jump: MASQUERADE
-  notify: save iptables
-
-- name: Forward traffic from etho --> wlan0
-  iptables:
-    chain: FORWARD
-    in_interface: eth0
-    out_interface: wlan0
-    ctstate: RELATED,ESTABLISHED
-    jump: ACCEPT
-  notify: save iptables
-
-- name: Forward traffic from wlan0 --> eth0
-  iptables:
-    chain: FORWARD
-    in_interface: wlan0
-    out_interface: eth0
-    jump: ACCEPT
-  notify: save iptables
-
-- name: Load iptables at boot
-  become: yes
-  lineinfile:
-    dest: /etc/rc.local
-    insertbefore: '^exit 0'
-    line: 'iptables-restore < /etc/iptables.ipv4.nat'
-  notify: save iptables
-
 - lineinfile: dest=/etc/dhcpcd.conf line="denyinterfaces wlan0"
 
 - name: Patch WLAN interface
@@ -67,12 +34,3 @@
   notify:
     - ifdown wlan
     - ifup wlan
-
-- meta: flush_handlers
-
-- name: Uncomment ipv4 forward option
-  lineinfile:
-    dest: /etc/sysctl.conf
-    insertafter: '^#net\.ipv4\.ip_forward=1'
-    line: 'net.ipv4.ip_forward=1'
-  notify: set forwarding rule

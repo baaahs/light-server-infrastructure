@@ -39,3 +39,9 @@
     name: hciuart
     enabled: no
     state: stopped
+
+- name: disable HDMI output
+  lineinfile:
+    path: /etc/rc.local
+    insertbefore: exit 0
+    line: /usr/bin/tvservice -o
