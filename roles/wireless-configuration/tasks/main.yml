@@ -1,13 +1,15 @@
 ---
 
-- name: install dnsmasq, a lightweight DHCP and caching DNS server
-  apt: name=dnsmasq state=present
+- name: install package requirements wireless access points and network access
+  apt:
+    pkg: "{{ item }}"
+    state: latest
+  with_items:
+    - dnsmasq
+    - hostapd
 
 - template: src=dnsmasq.conf.j2 dest=/etc/dnsmasq.conf
 #  notify: restart dnsmasq
-
-- name: install hostapd, a IEEE 802.11 AP, IEEE 802.1X/WPA/WPA2/EAP/RADIUS Authenticator
-  apt: name=hostapd state=present
 
 - template: src=hostapd.conf.j2 dest=/etc/hostapd/hostapd.conf
 #  notify: restart hostapd
@@ -42,4 +44,6 @@
               psk="{{ item.psk }}"
               priority={{ item.priority }}
       }
+    marker: "# {mark} ANSIBLE MANAGED BLOCK {{item.ssid}}"
   with_items: '{{ outbound_access_points }}'
+  notify: restart wlan0

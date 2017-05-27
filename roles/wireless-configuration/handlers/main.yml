@@ -6,14 +6,8 @@
 - name: restart hostapd
   service: name=hostapd state=restarted
 
-- name: ifdown wlan0
-  shell: "ifdown wlan0"
+- name: restart wlan0
+  shell: "ifdown wlan0 && ifup wlan0"
 
-- name: ifup wlan0
-  shell: "ifup wlan0"
-
-- name: ifdown wlan1
-  shell: "ifdown wlan0"
-
-- name: ifup wlan1
-  shell: "ifup wlan0"
+- name: restart wlan1
+  shell: "ifdown wlan1 && ifup wlan1"

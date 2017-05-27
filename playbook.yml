@@ -1,6 +1,6 @@
 ---
 
-- hosts: raspberry-pi-3-access-point
+- hosts: baaahs-lights-server
   roles:
     - setup
     - performance-optimizations

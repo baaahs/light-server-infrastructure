@@ -1,6 +1,6 @@
 ---
 
-- name: Add baaahs user
+- name: add baaahs user
   user:
     name: '{{ baaahs_primary_username }}'
     shell: /bin/bash
@@ -8,16 +8,21 @@
     append: yes
     password: '{{ baaahs_primary_password }}'
 
-- name: Install cherrypi
+- name: install pip requirements for baaahs light server
   pip:
-    name: CherryPy
+    name: "{{ item }}"
+  with_items:
+    - CherryPy
+    - https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/pybonjour/pybonjour-1.1.1.zip
 
-- name: Install requirements for pybonjour
-  apt: name=libavahi-compat-libdnssd1 state=installed
-
-- name: Install pybonjour
-  pip:
-    name: https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/pybonjour/pybonjour-1.1.1.zip
+- name: install package requirements for baaahs light server
+  apt:
+    pkg: "{{ item }}"
+    state: latest
+  with_items:
+    - libavahi-compat-libdnssd1
+    - ola
+    - ola-python
 
 - name: Clone master branch of BAAAHS lights
   git:
