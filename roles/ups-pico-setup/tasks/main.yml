@@ -6,10 +6,10 @@
     regexp: '^#dtparam=i2c_arm'
     line: 'dtparam=i2c_arm=on'
 
-- name: Install python RPI GPIO
+- name: install python RPI GPIO
   apt: name=python-rpi.gpio state=installed
 
-- name: Install packages required to compile openlighting alliance source
+- name: install ups pico required packages
   apt: name={{item}} state=installed
   with_items:
        - python-dev

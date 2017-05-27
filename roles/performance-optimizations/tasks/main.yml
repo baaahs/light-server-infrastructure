@@ -18,15 +18,14 @@
     insertafter: EOF
     line: 'dtparam=sd_overclock={{sd_card_overlock}}'
 
-- name: disable on-board bluetooth and wifi
+- name: disable on-board bluetooth
   blockinfile:
     path: /boot/config.txt
     insertafter: EOF
     block: |
       dtoverlay=pi3-disable-bt
-      dtoverlay=pi3-disable-wifi
 
-- name: disable on-board bluetooth and wifi
+- name: disable on-board bluetooth
   template:
     src: raspi-pi3-blacklist.conf.j2
     dest: /etc/modprobe.d/raspi-pi3-blacklist.conf

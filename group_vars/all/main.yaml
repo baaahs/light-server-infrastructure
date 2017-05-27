@@ -2,7 +2,7 @@ timezone: US/Pacific
 keyboard_layout: us
 locale: en_US.UTF-8
 sd_card_overlock: 100
-rpi_wlan_ip_prefix: 172.24.1.
+rpi_wlan_ip_prefix: 172.24.1
 rpi_wlan_ssid: pearl_by_baaahs
 rpi_wlan_wpa_passphrase: __bAAAhs2017
 rpi_wlan_channel: 6
