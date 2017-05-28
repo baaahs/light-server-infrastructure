@@ -36,6 +36,9 @@ To build a server do the following:
   - The SenseHAT HAT sits on top of the UPS PIco extended RPI GPIO header PINS.
   - The SanDisk SD Card goes in the SD Card slot on the RPI.
   - Insert the RPI into the case and close the case.
+  - Connect the DMXking ultraDMX adapter into a free USB port
+  - Connect the Panda Wireless PAU06 into a free USB port
+  - Connect Keyboard/Mouse, Ethernet and Power
 
 - Install Raspbian...
   - Boot up your PI w/ a USB keyboard and mouse, select installation of Raspbian Lite and select the keyboard layout of US.
