@@ -52,7 +52,7 @@
 
 - name: Update prepare-dirs script
   template:
-    src: ./templates/prepare-dirs.j2
+    src: prepare-dirs.j2
     dest: /etc/init.d/prepare-dirs
     owner: root
     group: root

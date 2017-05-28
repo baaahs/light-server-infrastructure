@@ -38,6 +38,7 @@
     - ola-python
     - lsof
     - tree
+    - jq
 
 - name: run rpi-update
   shell: rpi-update
