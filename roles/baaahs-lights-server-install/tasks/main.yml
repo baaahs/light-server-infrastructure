@@ -8,13 +8,6 @@
     append: yes
     password: '{{ baaahs_primary_password }}'
 
-- name: install pip requirements for baaahs light server
-  pip:
-    name: "{{ item }}"
-  with_items:
-    - CherryPy
-    - https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/pybonjour/pybonjour-1.1.1.zip
-
 - name: install package requirements for baaahs light server
   apt:
     pkg: "{{ item }}"
@@ -23,6 +16,13 @@
     - libavahi-compat-libdnssd1
     - ola
     - ola-python
+
+- name: install pip requirements for baaahs light server
+  pip:
+    name: "{{ item }}"
+  with_items:
+    - CherryPy
+    - https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/pybonjour/pybonjour-1.1.1.zip
 
 - name: Clone master branch of BAAAHS lights
   git:
