@@ -75,8 +75,12 @@
   become: true
   become_user: '{{ baaahs_primary_username }}'
 
-- name: install baaahs_lights systemd unit file
-  template: src=baaahs_lights.j2 dest=/etc/systemd/system/baaahs_lights.service
+- name: install lights systemd unit file
+  template: src=baaahs_lights.j2 dest=/etc/systemd/system/lights.service
 
-#- name: start baaahs_lights
-#  systemd: state=started name=baaahs_lights daemon_reload=yes
+- name: start lights
+  systemd:
+    name: lights
+    enabled: yes
+    state: started
+    daemon_reload: yes
