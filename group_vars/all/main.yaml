@@ -10,3 +10,5 @@ ola_version: 0.10.3
 baaahs_primary_username: baaahs
 baaahs_primary_password: armadildo
 baaahs_git_install_local_dir: lights
+dmx_universe_name: usb-outbound-dmx
+dmx_universe_id: 0

@@ -12,7 +12,6 @@ This project contains the necessary roles to take commodity, off-the-shelf hardw
 The parts required to build a server include:
 
 - [Raspberry PI 3](https://www.raspberrypi.org/products/raspberry-pi-3-model-b/)
-- [Sense HAT](https://www.raspberrypi.org/products/sense-hat/)
 - [Raspberry Pi 2/3 Copper Heat Sink Heatsink](https://www.amazon.com/gp/product/B01GM9EYQ8)
 - [Duinocases Industrial, Metal Enclosure](http://www.duinocases.com/store/raspberry-pi-enclosures/duinocase-b-enclosure-for-the-raspberry-pi-b/)
 - [UPS PIco HV3.0A 450 mAh Stack](http://www.pimodulescart.com/shop/item.aspx?itemid=30)
@@ -33,7 +32,6 @@ To build a server do the following:
 - Assemble your equipment...
   - The flat heat sink is affixed to the chip on the bottom of the RPI. The larger sinks are afixed to the top of the RPI.
   - The UPS PIco HAT sits on top of the RPI GPIO header PINS.
-  - The SenseHAT HAT sits on top of the UPS PIco extended RPI GPIO header PINS.
   - The SanDisk SD Card goes in the SD Card slot on the RPI.
   - Insert the RPI into the case and close the case.
   - Connect the DMXking ultraDMX adapter into a free USB port
@@ -50,4 +48,6 @@ To build a server do the following:
 You should now be able to SSH into the PI: `ssh pi@baaahslights.local`  
  
 # EXECUTE PLAYBOOK
-Execute this playbook against the `baaahslights.local` server, using a vault password obtained by contacting [Josh Durbin](https://github.com/joshdurbin). 
+Execute this playbook against the `baaahslights.local` server, using a vault password obtained by contacting [Josh Durbin](https://github.com/joshdurbin).
+
+Ex: `ansible-playbook playbook.yml -i inventory.dist --ask-vault-pass` 
