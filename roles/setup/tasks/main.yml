@@ -44,7 +44,13 @@
   shell: rpi-update
 
 - name: Adding banner info in sshd.conf
-  lineinfile: dest=/etc/ssh/sshd_config regexp='#Banner /etc/issue.net' line="Banner /etc/issue.net"
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: '#Banner /etc/issue.net'
+    line: "Banner /etc/issue.net"
+
+- name: Update message of the day
+  template: src=motd.j2 dest=/etc/motd
 
 - name: Update ssh banner
   template: src=ssh-banner.j2 dest=/etc/issue.net

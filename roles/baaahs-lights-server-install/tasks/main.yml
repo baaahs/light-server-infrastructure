@@ -1,5 +1,15 @@
 ---
 
+#- name: Slurp hosts file
+#  slurp:
+#    src: '~/{{ baaahs_git_install_local_dir }}/data/config.json'
+#  register: slurpfile
+#  become: true
+#  become_user: '{{ baaahs_primary_username }}'
+#
+#- debug:
+#    msg: "{{ (slurpfile.content | b64decode | from_json)['mode'] }}"
+
 - name: add baaahs user
   user:
     name: '{{ baaahs_primary_username }}'
@@ -16,6 +26,20 @@
     - libavahi-compat-libdnssd1
     - ola
     - ola-python
+
+- name: query for OLA plugin configuration files
+  find:
+    paths: '/etc/ola'
+    patterns: '*.conf'
+  register: ola_conf_files
+
+- name: disable all OLA plugins that are not USB serial
+  lineinfile:
+    dest: '{{ item.path }}'
+    regexp: 'enabled = true'
+    line: 'enabled = false'
+  with_items: '{{ ola_conf_files.files }}'
+  when: item.path != '/etc/ola/ola-usbserial.conf'
 
 - name: prompt user to connect dmx king usb adapter
   pause:
@@ -75,8 +99,24 @@
   become: true
   become_user: '{{ baaahs_primary_username }}'
 
+- name: change the mode from simulator to ola (currently dangerous)
+  lineinfile:
+    dest: '~/{{ baaahs_git_install_local_dir }}/data/config.json'
+    regexp: '"mode": "simulator",'
+    line: '"mode": "ola",'
+  become: true
+  become_user: '{{ baaahs_primary_username }}'
+
 - name: install lights systemd unit file
   template: src=baaahs_lights.j2 dest=/etc/systemd/system/lights.service
+
+- name: create log directory for lights service
+  file:
+    path: /var/log/lights
+    state: directory
+    user: '{{ baaahs_primary_username }}'
+    group: '{{ baaahs_primary_username }}'
+    mode: "u=rw,g=r,o=r"
 
 - name: start lights
   systemd:
