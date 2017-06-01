@@ -1,0 +1,14 @@
+[Unit]
+Description=OpenLighting Alliance Daemon
+After=multi-user.target
+
+[Service]
+Type=Simple
+User=olad
+ExecStart=/usr/local/bin/olad --syslog --log-level 3 --config-dir /etc/ola
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

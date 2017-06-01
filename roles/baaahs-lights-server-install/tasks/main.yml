@@ -1,15 +1,5 @@
 ---
 
-#- name: Slurp hosts file
-#  slurp:
-#    src: '~/{{ baaahs_git_install_local_dir }}/data/config.json'
-#  register: slurpfile
-#  become: true
-#  become_user: '{{ baaahs_primary_username }}'
-#
-#- debug:
-#    msg: "{{ (slurpfile.content | b64decode | from_json)['mode'] }}"
-
 - name: add baaahs user
   user:
     name: '{{ baaahs_primary_username }}'
@@ -24,65 +14,6 @@
     state: latest
   with_items:
     - libavahi-compat-libdnssd1
-    - ola
-    - ola-python
-
-- name: query for OLA plugin configuration files
-  find:
-    paths: '/etc/ola'
-    patterns: '*.conf'
-  register: ola_conf_files
-
-- name: disable all OLA plugins that are not USB serial
-  lineinfile:
-    dest: '{{ item.path }}'
-    regexp: 'enabled = true'
-    line: 'enabled = false'
-  with_items: '{{ ola_conf_files.files }}'
-  when: item.path != '/etc/ola/ola-usbserial.conf'
-
-- name: prompt user to connect dmx king usb adapter
-  pause:
-    prompt: 'Please connect the DMXKing ultraDMX micro USB adapter to the Raspberry PI now...'
-    seconds: 30
-
-- name: get list of current, pre-configured dmx universes from OLA
-  uri:
-    url: 'http://{{ inventory_hostname }}:9090/json/universe_plugin_list'
-    method: GET
-    return_content: yes
-  register: dmx_universes
-
-- name: parse, map universes to their names saved as a list
-  set_fact:
-    existing_universe_names: "{{ (dmx_universes.content|from_json)['universes'] | map(attribute='name') | list }}"
-
-- name: get list of dmx ports from OLA
-  uri:
-    url: 'http://{{ inventory_hostname }}:9090/json/get_ports'
-    method: GET
-    return_content: yes
-  register: dmx_ports
-  when: dmx_universe_name not in existing_universe_names
-
-- set_fact:
-    ultra_dmx_port_id: '{{ item.id }}'
-  with_items: '{{ dmx_ports.content }}'
-  when:
-    - dmx_universe_name not in existing_universe_names
-    - item.device == 'DMXking.com - ultraDMX Micro'
-    - item.is_output == True
-
-- fail: msg='Aborting. Please connect the DMXKing ultraDMX micro USB adapter to the Raspberry PI and retry.'
-  when:
-    - dmx_universe_name not in existing_universe_names
-    - ultra_dmx_port_id is undefined
-
-- uri:
-    url: 'http://{{ inventory_hostname }}:9090/new_universe'
-    method: POST
-    body: 'id={{ dmx_universe_id }} &name={{ dmx_universe_name }}&add_ports={{ ultra_dmx_port_id }}'
-  when: dmx_universe_name not in existing_universe_names
 
 - name: install pip requirements for baaahs light server
   pip:

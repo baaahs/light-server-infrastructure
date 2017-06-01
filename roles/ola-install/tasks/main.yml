@@ -1,0 +1,131 @@
+---
+
+- name: Detect if olad is already installed
+  command: which olad
+  changed_when: false
+  failed_when: false
+  register: ola_installed
+
+- name: Install packages required to compile openlighting alliance source
+  apt: name={{item}} state=installed
+  with_items:
+       - debhelper
+       - autotools-dev
+       - dh-autoreconf
+       - bash-completion
+       - libcppunit-dev
+       - bison
+       - flex
+       - pkg-config
+       - uuid-dev
+       - python
+       - python-protobuf
+       - python-numpy
+       - libprotobuf-dev
+       - protobuf-compiler
+       - libprotoc-dev
+       - libusb-1.0-0-dev
+       - libftdi-dev
+       - liblo-dev
+       - libmicrohttpd-dev
+       - libncurses5-dev
+  when: ola_installed|failed
+
+- name: download and extract openlighting alliance source code
+  unarchive:
+    src: 'https://github.com/OpenLightingProject/ola/releases/download/{{ ola_version }}/ola-{{ ola_version }}.tar.gz'
+    dest: /tmp
+    remote_src: True
+  when: ola_installed|failed
+
+- name: alert user that preparations and compilation of ola take about 25-30 minutes
+  pause:
+    prompt: 'The next operation will configure and compile OLA on the PI. These operations take about 25-30 minutes to complete.'
+    seconds: 5
+
+- name: Build openlighting alliance source code
+  command: {{ item }}
+  args:
+    chdir: '/tmp/ola-{{ ola_version }}'
+  with_items:
+    - autoreconf
+    - ./configure --enable-python-libs --disable-all-plugins --enable-usbpro
+    - make all
+    - make install
+    - ldconfig
+  when: ola_installed|failed
+
+- name: create olad group account
+  group:
+    name: olad
+    state: present
+    system: yes
+
+- name: create olad user account
+  user:
+    name: olad
+    state: present
+    group: olad
+    system: yes
+
+- name: create olad configuration directory
+  file:
+    path: /etc/ola
+    state: directory
+    mode: 'u=rw,g=r,o=r'
+    owner: olad
+    group: olad
+
+- name: install olad server configuration
+  template: src=ola-server.conf.j2 dest=/etc/ola/ola-server.conf
+
+- name: install olad usbserial plugin configuration
+  template: src=ola-usbserial.conf.j2 dest=/etc/ola/ola-usbserial.conf
+
+- name: install olad systemd file
+  template: src=olad.j2 dest=/etc/systemd/system/olad.service
+
+#############################
+
+- name: prompt user to connect dmx king usb adapter
+  pause:
+    prompt: 'Please connect the DMXKing ultraDMX micro USB adapter to the Raspberry PI now...'
+    seconds: 30
+
+- name: get list of current, pre-configured dmx universes from OLA
+  uri:
+    url: 'http://{{ inventory_hostname }}:9090/json/universe_plugin_list'
+    method: GET
+    return_content: yes
+  register: dmx_universes
+
+- name: parse, map universes to their names saved as a list
+  set_fact:
+    existing_universe_names: "{{ (dmx_universes.content|from_json)['universes'] | map(attribute='name') | list }}"
+
+- name: get list of dmx ports from OLA
+  uri:
+    url: 'http://{{ inventory_hostname }}:9090/json/get_ports'
+    method: GET
+    return_content: yes
+  register: dmx_ports
+  when: dmx_universe_name not in existing_universe_names
+
+- set_fact:
+    ultra_dmx_port_id: '{{ item.id }}'
+  with_items: '{{ dmx_ports.content }}'
+  when:
+    - dmx_universe_name not in existing_universe_names
+    - item.device == 'DMXking.com - ultraDMX Micro'
+    - item.is_output == True
+
+- fail: msg='Aborting. Please connect the DMXKing ultraDMX micro USB adapter to the Raspberry PI and retry.'
+  when:
+    - dmx_universe_name not in existing_universe_names
+    - ultra_dmx_port_id is undefined
+
+- uri:
+    url: 'http://{{ inventory_hostname }}:9090/new_universe'
+    method: POST
+    body: 'id={{ dmx_universe_id }} &name={{ dmx_universe_name }}&add_ports={{ ultra_dmx_port_id }}'
+  when: dmx_universe_name not in existing_universe_names

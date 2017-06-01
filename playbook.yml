@@ -7,5 +7,6 @@
     - endurance-optimizations
     - wireless-configuration
     - ups-pico-setup
+    - ola-install
     - baaahs-lights-server-install
   become: yes

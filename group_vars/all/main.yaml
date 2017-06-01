@@ -6,7 +6,8 @@ rpi_wlan_ip_prefix: 172.24.1
 rpi_wlan_ssid: baaahs
 rpi_wlan_wpa_passphrase: baaahs2017
 rpi_wlan_channel: 6
-ola_version: 0.10.3
+ola_version: 0.10.4
+ola_server_name: BAAAHS Lights
 baaahs_primary_username: baaahs
 baaahs_primary_password: armadildo
 baaahs_git_install_local_dir: lights
