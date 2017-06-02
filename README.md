@@ -48,15 +48,17 @@ To build a server do the following:
 You should now be able to SSH into the PI: `ssh pi@baaahslights.local`  
  
 # EXECUTE PLAYBOOK
-Execute this playbook against the `baaahslights.local` server, using a vault password obtained by contacting [Josh Durbin](https://github.com/joshdurbin).
+First, install ansible via brew; `brew install ansible` or via a binary/installer of your choice.
+
+Next, execute this playbook against the `baaahslights.local` server, using a vault password obtained by contacting [Josh Durbin](https://github.com/joshdurbin).
 
 Ex: `ansible-playbook playbook.yml -i inventory.dist --ask-vault-pass`
  
 # ADMINISTRATION OF THE SERVER
-First off -- there are three pathways onto the Raspberry PI lights server...
+There are three pathways onto the Raspberry PI lights server...
 
-1. via the RJ45 ethernet device on a pre-existing network (home, office, etc...)
-2. via the internal wifi adapter on a pre-configured network (home)
+1. via the RJ45 ethernet device on a pre-existing network
+2. via the internal wifi adapter on a pre-configured network
 3. via the wireless network the server creates, `baaahs`, with the WPA2 key `baaahs2017`
 
 If you're using option #1 or #2 above, you'll need to scan the network or otherwise obtain the IP assigend by the
@@ -64,5 +66,5 @@ networks DHCP subsystem. If you're using option #3, the Raspberry PI can be reac
 
 There are two web-based interfaces available:
 
-- OLA Daemon/interface at port `9090`
-- BAAAHS Light Server at port `....`
+- [OLA Daemon/interface](http://baaahslights.local:9090/new/#/) at port `9090`
+- [BAAAHS Light Server](http://baaahslights.local:9990/) at port `9990`
