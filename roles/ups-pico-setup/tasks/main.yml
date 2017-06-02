@@ -38,7 +38,9 @@
 #    update-rc.d picofssd enable
 
 - name: Install the UPS PIco HV3.0 Hardware RTC
-  apt: name=i2c-tools state=installed
+  apt:
+    name: i2c-tools
+    state: installed
 
 - name: Enable modules
   blockinfile:
