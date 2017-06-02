@@ -8,6 +8,7 @@ rpi_wlan_wpa_passphrase: baaahs2017
 rpi_wlan_channel: 6
 ola_version: 0.10.4
 ola_server_name: BAAAHS Lights
+ola_user_and_group: olad
 baaahs_primary_username: baaahs
 baaahs_primary_password: armadildo
 baaahs_git_install_local_dir: lights

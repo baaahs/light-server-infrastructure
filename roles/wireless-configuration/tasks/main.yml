@@ -8,11 +8,15 @@
     - dnsmasq
     - hostapd
 
-- template: src=dnsmasq.conf.j2 dest=/etc/dnsmasq.conf
-#  notify: restart dnsmasq
+- template:
+    src: dnsmasq.conf.j2
+    dest: /etc/dnsmasq.conf
+  notify: restart dnsmasq
 
-- template: src=hostapd.conf.j2 dest=/etc/hostapd/hostapd.conf
-#  notify: restart hostapd
+- template:
+    src: hostapd.conf.j2
+    dest: /etc/hostapd/hostapd.conf
+  notify: restart hostapd
 
 - name: Patch hostapd boot option
   lineinfile:

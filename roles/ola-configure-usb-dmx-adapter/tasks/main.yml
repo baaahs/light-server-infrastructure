@@ -29,7 +29,6 @@
   with_items: '{{ dmx_ports.content }}'
   when:
     - dmx_universe_name not in existing_universe_names
-    - item.device == 'DMXking.com - ultraDMX Micro'
     - item.is_output == True
 
 - fail: msg='Aborting. Please connect the DMXKing ultraDMX micro USB adapter to the Raspberry PI and retry.'

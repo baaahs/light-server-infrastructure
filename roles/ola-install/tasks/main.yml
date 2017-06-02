@@ -49,7 +49,7 @@
   args:
     chdir: '/tmp/ola-{{ ola_version }}'
   with_items:
-    - ./configure --enable-python-libs --disable-all-plugins --enable-usbdmx --enable-usbpro
+    - ./configure --enable-python-libs --disable-all-plugins --enable-usbpro
     - make all
     - make install
     - ldconfig
@@ -57,15 +57,15 @@
 
 - name: create olad group account
   group:
-    name: olad
+    name: '{{ ola_user_and_group }}'
     state: present
     system: yes
 
 - name: create olad user account
   user:
-    name: olad
+    name: '{{ ola_user_and_group }}'
     state: present
-    group: olad
+    groups: '{{ ola_user_and_group }},dialout'
     system: yes
 
 - name: create olad configuration directory
@@ -73,28 +73,22 @@
     path: /etc/ola
     state: directory
     mode: 'u=rwx,g=rx,o=rx'
-    owner: olad
-    group: olad
+    owner: '{{ ola_user_and_group }}'
+    group: '{{ ola_user_and_group }}'
 
 - name: install olad server configuration
   template:
     src: ola-server.conf.j2
     dest: /etc/ola/ola-server.conf
-    owner: olad
-    group: olad
+    owner: '{{ ola_user_and_group }}'
+    group: '{{ ola_user_and_group }}'
 
 - name: install olad usbserial plugin configuration
   template:
     src: ola-usbserial.conf.j2
     dest: /etc/ola/ola-usbserial.conf
-    owner: olad
-    group: olad
-
-- name: add symlink from dev to systemd such that olad wont start unless the usb to dmx adapter is plugged in
-  lineinfile:
-    path: /lib/udev/rules.d/99-systemd.rules
-    insertbefore: 'LABEL="systemd_end"'
-    line: 'KERNEL=="ttyUSB0", SYMLINK="ttyUSB0", TAG+="systemd"'
+    owner: '{{ ola_user_and_group }}'
+    group: '{{ ola_user_and_group }}'
 
 - name: install olad systemd file
   template:
