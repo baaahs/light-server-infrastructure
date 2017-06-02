@@ -42,14 +42,14 @@
   pause:
     prompt: 'The next operation will configure and compile OLA on the PI. These operations take about 25-30 minutes to complete.'
     seconds: 5
+  when: ola_installed|failed
 
 - name: Build openlighting alliance source code
-  command: {{ item }}
+  command: '{{ item }}'
   args:
     chdir: '/tmp/ola-{{ ola_version }}'
   with_items:
-    - autoreconf
-    - ./configure --enable-python-libs --disable-all-plugins --enable-usbpro
+    - ./configure --enable-python-libs --disable-all-plugins --enable-usbdmx --enable-usbpro
     - make all
     - make install
     - ldconfig
@@ -72,60 +72,38 @@
   file:
     path: /etc/ola
     state: directory
-    mode: 'u=rw,g=r,o=r'
+    mode: 'u=rwx,g=rx,o=rx'
     owner: olad
     group: olad
 
 - name: install olad server configuration
-  template: src=ola-server.conf.j2 dest=/etc/ola/ola-server.conf
+  template:
+    src: ola-server.conf.j2
+    dest: /etc/ola/ola-server.conf
+    owner: olad
+    group: olad
 
 - name: install olad usbserial plugin configuration
-  template: src=ola-usbserial.conf.j2 dest=/etc/ola/ola-usbserial.conf
+  template:
+    src: ola-usbserial.conf.j2
+    dest: /etc/ola/ola-usbserial.conf
+    owner: olad
+    group: olad
+
+- name: add symlink from dev to systemd such that olad wont start unless the usb to dmx adapter is plugged in
+  lineinfile:
+    path: /lib/udev/rules.d/99-systemd.rules
+    insertbefore: 'LABEL="systemd_end"'
+    line: 'KERNEL=="ttyUSB0", SYMLINK="ttyUSB0", TAG+="systemd"'
 
 - name: install olad systemd file
-  template: src=olad.j2 dest=/etc/systemd/system/olad.service
+  template:
+    src: olad.j2
+    dest: /etc/systemd/system/olad.service
 
-#############################
-
-- name: prompt user to connect dmx king usb adapter
-  pause:
-    prompt: 'Please connect the DMXKing ultraDMX micro USB adapter to the Raspberry PI now...'
-    seconds: 30
-
-- name: get list of current, pre-configured dmx universes from OLA
-  uri:
-    url: 'http://{{ inventory_hostname }}:9090/json/universe_plugin_list'
-    method: GET
-    return_content: yes
-  register: dmx_universes
-
-- name: parse, map universes to their names saved as a list
-  set_fact:
-    existing_universe_names: "{{ (dmx_universes.content|from_json)['universes'] | map(attribute='name') | list }}"
-
-- name: get list of dmx ports from OLA
-  uri:
-    url: 'http://{{ inventory_hostname }}:9090/json/get_ports'
-    method: GET
-    return_content: yes
-  register: dmx_ports
-  when: dmx_universe_name not in existing_universe_names
-
-- set_fact:
-    ultra_dmx_port_id: '{{ item.id }}'
-  with_items: '{{ dmx_ports.content }}'
-  when:
-    - dmx_universe_name not in existing_universe_names
-    - item.device == 'DMXking.com - ultraDMX Micro'
-    - item.is_output == True
-
-- fail: msg='Aborting. Please connect the DMXKing ultraDMX micro USB adapter to the Raspberry PI and retry.'
-  when:
-    - dmx_universe_name not in existing_universe_names
-    - ultra_dmx_port_id is undefined
-
-- uri:
-    url: 'http://{{ inventory_hostname }}:9090/new_universe'
-    method: POST
-    body: 'id={{ dmx_universe_id }} &name={{ dmx_universe_name }}&add_ports={{ ultra_dmx_port_id }}'
-  when: dmx_universe_name not in existing_universe_names
+- name: start olad
+  systemd:
+    name: olad
+    enabled: yes
+    state: started
+    daemon_reload: yes

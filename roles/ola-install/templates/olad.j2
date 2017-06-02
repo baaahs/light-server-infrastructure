@@ -1,6 +1,7 @@
 [Unit]
 Description=OpenLighting Alliance Daemon
-After=multi-user.target
+BindsTo=dev-video0.device
+After=multi-user.target dev-video0.device
 
 [Service]
 Type=Simple

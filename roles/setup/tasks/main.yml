@@ -34,8 +34,6 @@
     - vim
     - htop
     - python-pip
-    - ola
-    - ola-python
     - lsof
     - tree
     - jq
@@ -43,20 +41,23 @@
 - name: run rpi-update
   shell: rpi-update
 
-- name: Adding banner info in sshd.conf
-  lineinfile:
-    dest: /etc/ssh/sshd_config
-    regexp: '#Banner /etc/issue.net'
-    line: "Banner /etc/issue.net"
+#- name: Adding banner info in sshd.conf
+#  lineinfile:
+#    dest: /etc/ssh/sshd_config
+#    regexp: '#Banner /etc/issue.net'
+#    line: "Banner /etc/issue.net"
 
+# MOTD is ASCII image of: https://thebridgeinallegan.files.wordpress.com/2016/01/efedf-leah.jpg
 - name: Update message of the day
-  template: src=motd.j2 dest=/etc/motd
+  template:
+    src: motd.j2
+    dest: /etc/motd
 
-- name: Update ssh banner
-  template: src=ssh-banner.j2 dest=/etc/issue.net
-
-- name: Update console banner
-  template: src=ssh-banner.j2 dest=/etc/issue
+#- name: Update ssh banner
+#  template: src=ssh-banner.j2 dest=/etc/issue.net
+#
+#- name: Update console banner
+#  template: src=ssh-banner.j2 dest=/etc/issue
 
 - name: Restart ssh
   service: name=ssh state=restarted

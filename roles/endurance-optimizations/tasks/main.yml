@@ -1,3 +1,5 @@
+---
+
 - name: disable swapfile
   shell: dphys-swapfile swapoff
   ignore_errors: True

@@ -1,0 +1,17 @@
+---
+
+- name: restart rpi light server
+  shell: sleep 2 && shutdown -r now
+  async: 1
+  poll: 0
+  ignore_errors: true
+
+- name: wait for rpi light server to come back
+  local_action: wait_for
+  args:
+    host: "{{ inventory_hostname }}"
+    port: 22
+    state: started
+    delay: 30
+    timeout: 300
+  become: false

@@ -5,8 +5,10 @@
     - setup
     - performance-optimizations
     - endurance-optimizations
+    - restart
     - wireless-configuration
     - ups-pico-setup
     - ola-install
     - baaahs-lights-server-install
+    - ola-configure-usb-dmx-adapter
   become: yes
