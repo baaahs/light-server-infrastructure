@@ -1,27 +1,17 @@
-hhhhhhhhhhhhhhhhhhhhhhhhhhhyyhhhhhdddhyso//:::::::/+ydmmNNNNmmmdddddddddddmmmmmm
-ddddhhhhhhhhhhhhhhhhhhhhhhhhhhhhsss+/:::::-:---:---:-::/oddmmmmdhhhhhhhhhhhhdddd
-dddddddddddhhs+/:::///+oyhhhhyo/:---::-:--:-:::::::------:+shdmmdddhdddddddddddd
-ddddddddddhh+..-:--:::::--/o+::--:----------:::--:----------::osdddddddddddddddd
-hhhhdddddhhhy/..----:////:-------------::::-::::-:-------------:+yss+/::::::+shd
-hhhhhhhhhhhhhhs/-..--::///:::::----------::--:-:-:--------------::-//:::::-:---:
-yyyyyyyyyhhhhhhhyo/-.--:/++//:::----------:-:--::::::::::-..----:/+++//:::::---o
-yyyhyyyyyhhhdddhhhhyo/:--://////.::.--------.....--::::--...-::::::///::--.-:+yh
-yyyyyyyhhyhhhdddhhhhyhhyso///////yh/.`....````````.--....-..-:::////:---:/oyhhdd
-yyyhhyhhhhhhhyyyyyyyyyhhyo//:://:+yo.``..``````````..``-oyy-////////+osyhhddddhh
-yyyyyyyhyyyyyysssssssyyy+/:::::::..`.....`````````.....:yy/+////oyyhhhhhhhhhhhhh
-/+ssssyyyyyyyyyyyssssys+/::-:--::.``.-...````````......``.-::::/ossyyyyyyyyyhhhy
---:::://ossssssyysssss+/:::-------.`.-...````````...-.``..:::-::osssyysssssyyyyy
----------::/::/++//oo/::::-----------..`````  ```.....`..--:::::/osssyysssssssss
---:---------------:::::::::----------..````````````..-..-------:/+syysyssyyyysss
---------.------::::::::::::-------:--..``````````....----------:/+syyyyyyhhhyyyy
---------------:::::::::::::----.-----...`````````...-----..--::://syyyyyhhhhhhyy
------.------::::::::::::::::----.------++:--.-.--..----...----::/+syyyyyyyyyyyyy
----------------:::::::////::-------::..ohdhs++ss/..---...----:///+sssoossssyyyyy
-:---------:---:::::::/:///::-------::...:oydys+-`.---------::://+osssssssssyyyyy
-----------::--:::/:::::////:::::::::/:---/oho/-...----:-::::////osssyyyyyyyyyyss
------:--:--:--::::::::://///://///////::+oos++/:--:::::::::://++sssyyyyyyyyyyyss
--------:::::::::::::::::///////////++++::////:::///////////+//ossssyyyyyyyyyyyss
---::------:-:::::::::::::////////////+oooo+++++++////:://+++++ossssyssssssssssss
--:::---:---:::::/::/:://:///////:/::://+ooosoo+///::::::///+++ossssyysssssyyyyyy
---:--::-:-:/::::::////::://///+///:/::::://://::::::::://////+ossssssssssssyyyyy
-:---::::::::::://:/:///////:::////+///::/::::/:::///:/://::::+ooooosossooossssss
+
+There are two services concerning lights; 'olad' and 'lights'. 'lights' is the python codebase, service, custom to
+BAAAHS that runs light shows and the OSC service interface. 'olad' is the Open Lighting Alliance daemon which 'lights'
+interacts with to send DMX commands over the USB <--> DMX adapter.
+
+To view the status of one of these services:
+
+  systemctl status {{service}}
+
+To stop/start one of these services:
+
+  sudo systemctl stop {{service}}
+  sudo systemctl start {{service}}
+
+To view system logs:
+
+  sudo journalctl --system --follow --lines=100

@@ -41,11 +41,15 @@
 - name: run rpi-update
   shell: rpi-update
 
-# MOTD is ASCII image of: https://thebridgeinallegan.files.wordpress.com/2016/01/efedf-leah.jpg
 - name: Update message of the day
   template:
     src: motd.j2
     dest: /etc/motd
+
+- name: Remove the ssh warning about the default pi password
+  file:
+    path: /etc/profile.d/sshpwd.sh
+    state: absent
 
 - name: Restart ssh
   service: name=ssh state=restarted
