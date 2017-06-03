@@ -12,6 +12,12 @@ To stop/start one of these services:
   sudo systemctl stop {{service}}
   sudo systemctl start {{service}}
 
+Note: Both services are set to automatically restart no matter what unless they are explicitly stopped. If a service
+  crashes, if the service is shutdown via a web interface (and not the systemd interfaces), or faults for any other
+  reason it will automatically restart. The 'olad' service is a dependency for the 'lights' service.
+
+  **** If you use systemd to stop a service, it will not auto-restart. ****
+
 To view system logs:
 
   sudo journalctl --system --follow --lines=100
