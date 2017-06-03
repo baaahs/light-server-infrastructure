@@ -33,6 +33,12 @@
     group: root
     mode: 'u=rw,g=r,o=r'
 
+- name: disable ntp
+  systemd:
+    name: ntp
+    enabled: no
+    state: stopped
+
 - name: disable hciuart
   systemd:
     name: hciuart

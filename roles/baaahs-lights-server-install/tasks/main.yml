@@ -40,7 +40,9 @@
   become_user: '{{ baaahs_primary_username }}'
 
 - name: install lights systemd unit file
-  template: src=baaahs_lights.j2 dest=/etc/systemd/system/lights.service
+  template:
+    src: baaahs_lights.j2
+    dest: /etc/systemd/system/lights.service
 
 - name: start lights
   systemd:

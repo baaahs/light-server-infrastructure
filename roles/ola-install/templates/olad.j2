@@ -8,7 +8,7 @@ User=olad
 ExecStart=/usr/local/bin/olad --syslog --log-level 3 --config-dir /etc/ola
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
-Restart=on-failure
+Restart=always
 
 [Install]
 WantedBy=multi-user.target

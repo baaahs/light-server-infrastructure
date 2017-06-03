@@ -9,7 +9,7 @@ WorkingDirectory=/home/{{baaahs_primary_username}}/{{baaahs_git_install_local_di
 ExecStart=/usr/bin/python /home/{{baaahs_primary_username}}/{{baaahs_git_install_local_dir}}/go.py
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
-Restart=on-failure
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
