@@ -25,14 +25,14 @@ To build a server do the following:
 
 - Prepare your SD Card...
   - Insert the SanDisk SD card in your machine and ensure it's formatted FAT32 and blank.
-  - Download the [NOOBS Lite](https://www.raspberrypi.org/downloads/noobs/) image from the linked page.
+  - Download the latest [NOOBS Lite](https://downloads.raspberrypi.org/NOOBS_lite_latest) image.
   - Unzip the contents of download onto the newly formatted SanDisk SD Card.
-  - Eject the card and insert it into the RPI.
+  - Eject the card and set it aside.
 
 - Assemble your equipment...
-  - The flat heat sink is affixed to the chip on the bottom of the RPI. The larger sinks are afixed to the top of the RPI.
+  - Affix the heat sinks -- the flat heat sink is applied to the underside chip, the larger two heat sinks are applied to the chips on the topside of the PI.
   - The UPS PIco HAT sits on top of the RPI GPIO header PINS.
-  - The SanDisk SD Card goes in the SD Card slot on the RPI.
+  - Insert the SD card into the PI. (Note: The PI 3 has a push->pull, not push-push SD card slot)
   - Insert the RPI into the case and close the case.
   - Connect the DMXking ultraDMX adapter into a free USB port
   - Connect the Panda Wireless PAU06 into a free USB port
@@ -48,7 +48,7 @@ To build a server do the following:
 You should now be able to SSH into the PI: `ssh pi@baaahslights.local`  
  
 # EXECUTE PLAYBOOK
-First, install ansible via brew; `brew install ansible` or via a binary/installer of your choice.
+First, install [ansible](http://docs.ansible.com/ansible/index.html) via brew; `brew install ansible` or via a binary/installer of your choice.
 
 Next, execute this playbook against the `baaahslights.local` server, using a vault password obtained by contacting [Josh Durbin](https://github.com/joshdurbin).
 
