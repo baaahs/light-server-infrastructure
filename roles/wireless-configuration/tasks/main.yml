@@ -26,6 +26,14 @@
 
 - lineinfile: dest=/etc/dhcpcd.conf line="denyinterfaces wlan1"
 
+- name: install udev rules to ensure internal wireless adapter is wlan0 and panda adapters are wlan1
+  template:
+    src: 70-persistent-net.rules.j2
+    dest: /etc/udev/rules.d/70-persistent-net.rules
+    owner: root
+    group: root
+    mode: 'u=rw,g=r,o=r'
+
 - name: install custom interfaces
   template:
     src: interfaces.j2

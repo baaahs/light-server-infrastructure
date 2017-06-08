@@ -10,17 +10,9 @@
 # Description:       Create needed directories on /var/log/ for tmpfs at startup
 ### END INIT INFO
 # needed Dirs
-DIR[0]=/var/log/nginx
-DIR[1]=/var/log/cups
-DIR[2]=/var/log/apt
-DIR[3]=/var/log/ConsoleKit
-DIR[4]=/var/log/fsck
-DIR[5]=/var/log/news
-DIR[6]=/var/log/ntpstats
-DIR[7]=/var/log/samba
-DIR[8]=/var/log/lastlog
-DIR[9]=/var/log/exim
-DIR[10]=/var/log/watchdog
+DIR[0]=/var/log/apt
+DIR[1]=/var/log/fsck
+DIR[2]=/var/log/lastlog
 case "${1:-''}" in
   start)
 {% raw %}        typeset -i i=0 max=${#DIR[*]}
