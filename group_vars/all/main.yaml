@@ -15,3 +15,4 @@ baaahs_git_install_local_dir: lights
 dmx_universe_name: usb-outbound-dmx
 dmx_universe_id: 0
 panda_wireless_adapter_oui: 9c:ef:d5
+raspberry_pi_foundation_adapter_oui: b8:27:eb
