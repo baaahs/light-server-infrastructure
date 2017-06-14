@@ -8,6 +8,8 @@ This project contains the necessary roles to take commodity, off-the-shelf hardw
 - Light server, show processing and management and communication with connected OSC devices (smartphones, mainly)
 - DMX control via transmition
 
+![Unit without top case](https://github.com/baaahs/light-server-infrastructure/blob/data/baaahs_server_without_top_case.jpg)
+
 # PARTS LIST
 The parts required to build a server include:
 
