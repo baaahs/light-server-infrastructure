@@ -1,2 +1,2 @@
 [baaahs-lights-server]
-baaahslights.local ansible_user=pi ansible_ssh_pass=raspberry
+baaahslights.local ansible_user=pi

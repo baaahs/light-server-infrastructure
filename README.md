@@ -45,7 +45,8 @@ To build a server do the following:
   - Run `sudo raspi-config`, select `Interfacing Options` and enable SSH, select the option to change the server name. Set the name to `baaahslights`
   - Reboot
     
-You should now be able to SSH into the PI: `ssh pi@baaahslights.local`  
+You should now be able to SSH into the PI: `ssh pi@baaahslights.local`. While you can SSH to the PI via password authentication, Ansible prefers not to and
+  will complain if you try to. To avoid this, copy your public key to the PI to complete setup either manually or using `ssh-copy-id pi@baaahslights.local` (defaults to default public key).   
  
 # EXECUTE PLAYBOOK
 First, install [ansible](http://docs.ansible.com/ansible/index.html) via brew; `brew install ansible` or via a binary/installer of your choice.

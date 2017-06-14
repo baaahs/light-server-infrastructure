@@ -19,11 +19,10 @@
     line: 'dtparam=sd_overclock={{sd_card_overlock}}'
 
 - name: disable on-board bluetooth
-  blockinfile:
+  lineinfile:
     path: /boot/config.txt
     insertafter: EOF
-    block: |
-      dtoverlay=pi3-disable-bt
+    line: dtoverlay=pi3-disable-bt
 
 - name: disable on-board bluetooth
   template:
@@ -44,9 +43,3 @@
     name: hciuart
     enabled: no
     state: stopped
-
-- name: disable HDMI output
-  lineinfile:
-    path: /etc/rc.local
-    insertbefore: exit 0
-    line: /usr/bin/tvservice -o

@@ -1,16 +1,14 @@
 ---
 
-- name: enable the ARM I2C interface
-  lineinfile:
-    path: /boot/config.txt
-    regexp: '^#dtparam=i2c_arm'
-    line: 'dtparam=i2c_arm=on'
-
 - name: install python RPI GPIO
-  apt: name=python-rpi.gpio state=installed
+  apt:
+    pkg: python-rpi.gpio
+    state: latest
 
 - name: install ups pico required packages
-  apt: name={{item}} state=installed
+  apt:
+    pkg: "{{ item }}"
+    state: latest
   with_items:
        - python-dev
        - python-serial
@@ -23,24 +21,52 @@
   pip:
     name: xmltodict
 
+- name: eable the ARM I2C interface
+  lineinfile:
+    dest: /boot/config.txt
+    regexp: '^#dtparam=i2c_arm=on'
+    line: 'dtparam=i2c_arm=on'
+
+- name: disable the serial port
+  lineinfile:
+    path: /boot/config.txt
+    insertafter: EOF
+    line: enable_uart=0
+
 - name: clone PiModules project
   git:
     repo: 'https://github.com/modmypi/PiModules.git'
     dest: /tmp/pymodules
+
+- name: Install the email broadcasting package (required)
+  command: python setup.py install
+  args:
+    chdir: /tmp/pymodules/code/python/package
 
 - name: Install the System Monitoring & File Safe Shutdown Daemons
   command: python setup.py install
   args:
     chdir: /tmp/pymodules/code/python/upspico/picofssd
 
-#    update-rc.d picofssd defaults
+- name: Install the pico status script
+  copy:
+    src: /tmp/pymodules/pico_status/pico_status_hv3.0.py
+    dest: /usr/local/bin/pico_status_hv3.0.py
+    owner: root
+    group: root
+    remote_src: True
+    mode: "u=rwx,g=rx,o=rx"
 
-#    update-rc.d picofssd enable
+- name: enable pico fssd
+  service:
+    name: picofssd
+    enabled: yes
+    state: started
 
 - name: Install the UPS PIco HV3.0 Hardware RTC
   apt:
-    name: i2c-tools
-    state: installed
+    pkg: i2c-tools
+    state: latest
 
 - name: Enable modules
   blockinfile:
@@ -48,11 +74,12 @@
     insertbefore: EOF
     block: |
       i2c-bcm2708
+      i2c-dev
       rtc-ds1307
 
-- name: Enable modules
+- name: Enable RTC
   blockinfile:
-    path: /etc/modules
+    path: /etc/rc.local
     insertbefore: exit 0
     block: |
       echo ds1307 0x68 > /sys/class/i2c-adapter/i2c-1/new_device
