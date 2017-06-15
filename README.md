@@ -21,6 +21,7 @@ The parts required to build a server include:
 - [DMXking ultraDMX Micro USB DMX adapter/dongle](https://www.amazon.com/gp/product/B00T8OKM98/)
 - [CanaKit 5V 2.5A Raspberry Pi 3 Power Supply / Adapter / Charger (UL Listed)](https://www.amazon.com/CanaKit-Raspberry-Supply-Adapter-Charger/dp/B00MARDJZ4/)
 - [Panda Wireless PAU06 300Mbps N USB Adapter](https://www.amazon.com/Panda-Wireless-PAU06-300Mbps-Adapter/dp/B00JDVRCI0)
+- [Kinobo - USB 2.0 Mini Microphone "Makio" Mic](https://www.amazon.com/gp/product/B00IR8R7WQ)
 
 # SERVER BUILD
 To build a server do the following:

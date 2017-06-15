@@ -54,7 +54,7 @@
     dest: /etc/init.d/prepare-dirs
     owner: root
     group: root
-    mode: 0755
+    mode: 'u=rwx,g=rx,o=rx'
 
 - name: enable prepare-dirs on startup
   service:
