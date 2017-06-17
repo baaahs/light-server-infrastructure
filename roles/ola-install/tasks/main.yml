@@ -7,7 +7,9 @@
   register: ola_installed
 
 - name: Install packages required to compile openlighting alliance source
-  apt: name={{item}} state=installed
+  apt:
+    name: {{item}}
+    state: installed
   with_items:
        - debhelper
        - autotools-dev

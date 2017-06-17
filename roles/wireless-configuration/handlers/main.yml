@@ -1,10 +1,14 @@
 ---
 
 - name: restart dnsmasq
-  service: name=dnsmasq state=restarted
+  service:
+    name: dnsmasq
+    state: restarted
 
 - name: restart hostapd
-  service: name=hostapd state=restarted
+  service:
+    name: hostapd
+    state: restarted
 
 - name: restart wlan0
   shell: "ifdown wlan0 && ifup wlan0"

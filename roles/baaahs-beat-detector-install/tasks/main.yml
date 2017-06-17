@@ -1,0 +1,14 @@
+---
+
+- name: install package requirements
+  apt:
+    pkg: "{{ item }}"
+    state: latest
+  with_items:
+    - libasound2-dev
+
+- name: install pip requirements
+  pip:
+    name: "{{ item }}"
+  with_items:
+    - pyalsaaudio
