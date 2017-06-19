@@ -41,6 +41,11 @@
 - name: run rpi-update
   shell: rpi-update
 
+- name: Install the readme
+  template:
+    src: readme.txt
+    dest: ~/readme.txt
+
 - name: Update message of the day
   template:
     src: motd.j2
