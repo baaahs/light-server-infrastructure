@@ -8,8 +8,8 @@
 
 - name: Install packages required to compile openlighting alliance source
   apt:
-    name: {{item}}
-    state: installed
+    pkg: "{{ item }}"
+    state: latest
   with_items:
        - debhelper
        - autotools-dev
@@ -38,12 +38,6 @@
     src: 'https://github.com/OpenLightingProject/ola/releases/download/{{ ola_version }}/ola-{{ ola_version }}.tar.gz'
     dest: /tmp
     remote_src: True
-  when: ola_installed|failed
-
-- name: alert user that preparations and compilation of ola take about 25-30 minutes
-  pause:
-    prompt: 'The next operation will configure and compile OLA on the PI. These operations take about 25-30 minutes to complete.'
-    seconds: 5
   when: ola_installed|failed
 
 - name: Build openlighting alliance source code
