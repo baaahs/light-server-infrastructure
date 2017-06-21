@@ -5,12 +5,12 @@ interacts with to send DMX commands over the USB <--> DMX adapter.
 
 To view the status of one of these services:
 
-  systemctl status {{service}}
+  systemctl status <service}>
 
 To stop/start one of these services:
 
-  sudo systemctl stop {{service}}
-  sudo systemctl start {{service}}
+  sudo systemctl stop <service>
+  sudo systemctl start <service>
 
 Note: Both services are set to automatically restart no matter what unless they are explicitly stopped. If a service
   crashes, if the service is shutdown via a web interface (and not the systemd interfaces), or faults for any other
