@@ -43,19 +43,7 @@
     mode: 'u=rw,g=r,o=r'
 
 - name: add pre-configured outbound wlan networks
-  blockinfile:
+  template:
+    src: wpa_supplicant.j2
     dest: /etc/wpa_supplicant/wpa_supplicant.conf
-    insertafter: EOF
-    block: |
-      network={
-              ssid="{{ item.ssid }}"
-              key_mgmt=WPA-PSK
-              proto=WPA2
-              pairwise=CCMP
-              group=CCMP
-              psk="{{ item.psk }}"
-              priority={{ item.priority }}
-      }
-    marker: "# {mark} ANSIBLE MANAGED BLOCK {{item.ssid}}"
-  with_items: '{{ outbound_access_points }}'
   notify: restart wlan0

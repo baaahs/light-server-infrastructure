@@ -1,0 +1,15 @@
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+ap_scan=1
+update_config=1
+
+{% for access_point in outbound_access_points %}
+network={
+      ssid="{{ access_point.ssid }}"
+      key_mgmt=WPA-PSK
+      proto=WPA2
+      pairwise=CCMP
+      group=CCMP
+      psk="{{ access_point.psk }}"
+      priority={{ access_point.priority }}
+}
+{% endfor %}
