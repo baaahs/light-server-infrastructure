@@ -56,5 +56,16 @@
     path: /etc/profile.d/sshpwd.sh
     state: absent
 
+- name: Add the system_status profile.d script
+  template:
+    src: system_status.sh
+    dest: /etc/profile.d/system_status.sh
+
+- name: disable print lastlog
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: '^PrintLastLog yes'
+    line: 'PrintLastLog no'
+
 - name: Restart ssh
   service: name=ssh state=restarted

@@ -30,3 +30,7 @@ If the fader or DMX control page are open on a tablet, phone, or laptop and the 
   might experience flickering. This is because the ola interface is broadcasting a message like the aforementioned "all white"
   and the python-based 'lights' server is instructing whatever the running show specifies, leading to a flickr affect.
   In this case, close the ola interface windows.
+
+To run the DMX setup script, first become the baaahs user via 'sudo su baaahs', change to the baaahs user's lights
+  installation directory via 'cd ~/lights', finally run the script via './panel_setup.py'. The sheep should turn entirely
+  white and should illumimate each target panel red as it steps through all available panels.
