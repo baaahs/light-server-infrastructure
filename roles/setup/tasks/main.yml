@@ -45,6 +45,8 @@
   template:
     src: readme.txt
     dest: ~/readme.txt
+  become: true
+  become_user: pi
 
 - name: Update message of the day
   template:
