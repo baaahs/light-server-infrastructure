@@ -11,5 +11,5 @@
     - ola-install
     - baaahs-lights-server-install
     - ola-configure-usb-dmx-adapter
-    - baaahs-beat-detector-install
+    - baaahs-cadence-install
   become: yes

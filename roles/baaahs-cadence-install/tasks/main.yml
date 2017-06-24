@@ -2,13 +2,13 @@
 
 - name: USB sound cards are registered as card 1
   lineinfile:
-    dest: /etc/default/keyboard
+    dest: /usr/share/alsa/alsa.conf
     regexp: '^defaults.ctl.card 0'
     line: 'defaults.ctl.card 1'
 
 - name: USB sound cards are registered as card 1
   lineinfile:
-    dest: /etc/default/keyboard
+    dest: /usr/share/alsa/alsa.conf
     regexp: '^defaults.pcm.card 0'
     line: 'defaults.pcm.card 1'
 
