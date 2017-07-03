@@ -12,6 +12,7 @@ ola_user_and_group: olad
 baaahs_primary_username: baaahs
 baaahs_primary_password: armadildo
 baaahs_git_install_local_dir: lights
+baaahs_layout_server_install_local_dir: layout_server
 dmx_universe_name: usb-outbound-dmx
 dmx_universe_id: 0
 panda_wireless_adapter_oui: 9c:ef:d5

@@ -1,0 +1,15 @@
+[Unit]
+Description=BAAAHS OSC Layout Server
+After=multi-user.target
+
+[Service]
+Type=Simple
+User=baaahs
+WorkingDirectory=/home/{{baaahs_primary_username}}/{{baaahs_layout_server_install_local_dir}}
+ExecStart=/usr/bin/python /home/{{baaahs_primary_username}}/{{baaahs_layout_server_install_local_dir}}/go.py
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
