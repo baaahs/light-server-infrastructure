@@ -1,36 +1,43 @@
 
-There are two services concerning lights; 'olad' and 'lights'. 'lights' is the python codebase, service, custom to
-BAAAHS that runs light shows and the OSC service interface. 'olad' is the Open Lighting Alliance daemon which 'lights'
-interacts with to send DMX commands over the USB <--> DMX adapter.
+Quick Reference:
 
-To view the status of one of these services:
+To get a service status execute ---> systemctl status <service>
+To start/stop a service execute ---> sudo systemctl start/stop <service>
+To view service logs execute    ---> sudo journalctl --system --follow --lines=100
+To view kernel messages execute ---> dmesg --follow
+To restart the server           ---> sudo reboot
 
-  systemctl status <service}>
+-------------------------------------------------------------------------------
 
-To stop/start one of these services:
+To debug and make the entire sheep white, do the following:
 
-  sudo systemctl stop <service>
-  sudo systemctl start <service>
+ 1. Stop the baaahs lights server
+    ---> sudo systemctl stop lights
+ 2. Access the OLA faders console and select the illuminated light bulb setting all channels to full at
+    ---> http://{{rpi_wlan_ip_prefix}}.1:9090/new/#/universe/0/faders
 
-Note: Both services are set to automatically restart no matter what unless they are explicitly stopped. If a service
-  crashes, if the service is shutdown via a web interface (and not the systemd interfaces), or faults for any other
-  reason it will automatically restart. The 'olad' service is a dependency for the 'lights' service.
+* Note * There is also a legacy UI at http://{{rpi_wlan_ip_prefix}}.1:9090/ola.html. Open that page, select "Universes"
+           on the left, then the single Universe, "Universe 0", then the "DMX Console" tab. From that tab, select the
+           illuminated light bulb.
+** Note ** It is important the the DMX Console page is closed after its used. If it is not closed and the BAAAHS lights
+             server is online, the sheep will flicker.
 
-  **** If you use systemd to stop a service, it will not auto-restart. ****
+-------------------------------------------------------------------------------
 
-To view system logs:
+To map sheep panels / panel setup, do the following:
 
-  sudo journalctl --system --follow --lines=100
-
-If you wish to make the sheep simply white you must shutdown the 'lights' service, then go into the olad control
-  interface, select the default/single universe, and select the illuminated light icon on the faders tab. This broadcasts
-  a message across all channels of 255, full brightness, for white.
-
-If the fader or DMX control page are open on a tablet, phone, or laptop and the 'lights' server is also running, the sheep
-  might experience flickering. This is because the ola interface is broadcasting a message like the aforementioned "all white"
-  and the python-based 'lights' server is instructing whatever the running show specifies, leading to a flickr affect.
-  In this case, close the ola interface windows.
-
-To run the DMX setup script, first become the baaahs user via 'sudo su baaahs', change to the baaahs user's lights
-  installation directory via 'cd ~/lights', finally run the script via './panel_setup.py'. The sheep should turn entirely
-  white and should illumimate each target panel red as it steps through all available panels.
+ 1. Stop the baaahs lights server
+    ---> sudo systemctl stop lights
+ 2. SU to the baaahs user
+    ---> sudo su baaahs
+ 3. Change directory to the lights server directory
+    ---> cd lights
+ 4. Execute the panel setup
+    ---> ./panel_setup.py
+ 5. Run through the setup mapping panels one by one. Once done, enter "save"
+ 6. Quit the panel setup utility, enter "quit"
+ 7. Backup the existing panel setup JSON at ~/lights/data/dmx_mapping.json
+ 8. Copy the saved output from the mapping utility over the old mapping
+    ---> cp -f dmx_setup.json data/dmx_mapping.json
+ 9. Start the baaahs lights server
+    ---> sudo systemctl start lights
