@@ -6,7 +6,7 @@
   failed_when: false
   register: ola_installed
 
-- name: Install packages required to compile openlighting alliance source
+- name: Install packages required to compile Open Lighting Architecture source
   apt:
     pkg: "{{ item }}"
     state: latest
@@ -33,14 +33,14 @@
        - libncurses5-dev
   when: ola_installed|failed
 
-- name: download and extract openlighting alliance source code
+- name: download and extract Open Lighting Architecture source code
   unarchive:
     src: 'https://github.com/OpenLightingProject/ola/releases/download/{{ ola_version }}/ola-{{ ola_version }}.tar.gz'
     dest: /tmp
     remote_src: True
   when: ola_installed|failed
 
-- name: Build openlighting alliance source code
+- name: Build Open Lighting Architecture source code
   command: '{{ item }}'
   args:
     chdir: '/tmp/ola-{{ ola_version }}'
