@@ -74,7 +74,7 @@
 
 - name: Install the UPS Pico scripts
   unarchive:
-    src: 'https://github.com/baaahs/ups_pico_scripts/archive/master.zip'
+    src: 'https://github.com/baaahs/ups-pico-scripts/archive/master.zip'
     dest: /usr/local/bin
     remote_src: True
     extra_opts: ["-j"]
