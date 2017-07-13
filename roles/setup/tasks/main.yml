@@ -77,4 +77,6 @@
     src: 'https://github.com/baaahs/ups_pico_scripts/archive/master.zip'
     dest: /usr/local/bin
     remote_src: True
+    extra_opts: ["-j"]
     mode: "u=rwx,g=rx,o=rx"
+  ignore_errors: True

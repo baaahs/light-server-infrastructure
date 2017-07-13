@@ -17,7 +17,7 @@ MAPPING_LASTMOD=$((($(date +%s) - $(date +%s -r /home/baaahs/lights/data/dmx_map
 PI_VOLTAGE=$(pi_voltage)
 PICO_UPS_POWERMODE=$(pico_ups_powermode)
 PICO_UPS_BATTERY_CHARGE_PERCENTAGE=$(pico_ups_battery_charge_percentage)
-PICO_UPS_BATTERY_VOLTAGE=$(ups_pico_battery_voltage)
+PICO_UPS_BATTERY_VOLTAGE=$(pico_ups_battery_voltage)
 
 echo "Service Stats:"
 echo "The olad service is..........$(if [ $OLAD_SERVICE_ACTIVE -eq 0 ]; then echo "active"; else echo "inactive"; fi)"
