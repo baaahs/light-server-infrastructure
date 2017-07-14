@@ -4,7 +4,7 @@ Description=OLA Universe Watchdog
 [Service]
 User=baaahs
 WorkingDirectory=/home/{{baaahs_primary_username}}/{{baaahs_ola_universe_watchdog}}
-ExecStart=/usr/bin/python /home/{{baaahs_primary_username}}/{{baaahs_ola_universe_watchdog}}/go.py
+ExecStart=/usr/bin/python /home/{{baaahs_primary_username}}/{{baaahs_ola_universe_watchdog}}/ola_universe_watchdog.py
 
 [Install]
 WantedBy=multi-user.target

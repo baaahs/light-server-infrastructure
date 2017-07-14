@@ -98,6 +98,15 @@
     state: started
     daemon_reload: yes
 
+- name: Clone master branch of BAAAHS OSC Layout Server
+  git:
+    repo: 'https://github.com/baaahs/ola-universe-watchdog.git'
+    dest: '~/{{ baaahs_ola_universe_watchdog }}'
+    version: master
+    force: yes
+  become: true
+  become_user: '{{ baaahs_primary_username }}'
+
 - name: install ola universe watchdog
   template:
     src: ola-universe-watchdog.j2
