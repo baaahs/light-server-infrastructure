@@ -10,6 +10,5 @@
     - ups-pico-setup
     - ola-install
     - baaahs-lights-server-install
-    - ola-configure-usb-dmx-adapter
     - baaahs-cadence-install
   become: yes
