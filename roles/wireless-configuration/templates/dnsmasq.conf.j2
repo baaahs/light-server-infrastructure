@@ -2,7 +2,7 @@
 interface=wlan1
 
 #Explicitly specify the address to listen on 
-listen-address={{ rpi_wlan_ip_prefix }}.1
+listen-address={{ rpi_wlan_interface_ip }}
 
 # Bind to the interface to make sure we aren't sending things elsewhere 
 bind-interfaces
@@ -14,4 +14,4 @@ domain-needed
 bogus-priv
 
 # Assign DHCP IP addresses
-dhcp-range={{ rpi_wlan_ip_prefix }}.10,{{ rpi_wlan_ip_prefix }}.50,2h
+dhcp-range={{ rpi_wlan_first_dhcp_ip }},{{ rpi_wlan_last_dhcp_ip }},1h

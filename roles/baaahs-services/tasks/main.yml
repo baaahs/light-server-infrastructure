@@ -14,6 +14,7 @@
     state: latest
   with_items:
     - libavahi-compat-libdnssd1
+    - libasound2-dev
 
 - name: install pip requirements for baaahs light server
   pip:
@@ -21,6 +22,8 @@
   with_items:
     - CherryPy
     - https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/pybonjour/pybonjour-1.1.1.zip
+    - cachetools
+    - pyalsaaudio
 
 - name: Clone master branch of BAAAHS lights
   git:
@@ -50,3 +53,36 @@
     enabled: yes
     state: started
     daemon_reload: yes
+
+- name: Clone master branch of BAAAHS OSC Layout Server
+  git:
+    repo: 'https://github.com/baaahs/osc-layout-server.git'
+    dest: '~/{{ baaahs_layout_server_install_local_dir }}'
+    version: master
+    force: yes
+  become: true
+  become_user: '{{ baaahs_primary_username }}'
+
+- name: install osc layout server systemd unit file
+  template:
+    src: baaahs_osc_layout_server.j2
+    dest: /etc/systemd/system/osc_layout_server.service
+
+- name: start osc layout server
+  systemd:
+    name: osc_layout_server
+    enabled: yes
+    state: started
+    daemon_reload: yes
+
+- name: USB sound cards are registered as card 1
+  lineinfile:
+    dest: /usr/share/alsa/alsa.conf
+    regexp: '^defaults.ctl.card 0'
+    line: 'defaults.ctl.card 1'
+
+- name: USB sound cards are registered as card 1
+  lineinfile:
+    dest: /usr/share/alsa/alsa.conf
+    regexp: '^defaults.pcm.card 0'
+    line: 'defaults.pcm.card 1'

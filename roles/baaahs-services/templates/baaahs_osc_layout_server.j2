@@ -5,7 +5,7 @@ After=multi-user.target
 [Service]
 User=baaahs
 WorkingDirectory=/home/{{baaahs_primary_username}}/{{baaahs_layout_server_install_local_dir}}
-ExecStart=/usr/bin/python /home/{{baaahs_primary_username}}/{{baaahs_layout_server_install_local_dir}}/go.py
+ExecStart=/usr/bin/python /home/{{baaahs_primary_username}}/{{baaahs_layout_server_install_local_dir}}/go.py --layouts-dir layouts
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
 Restart=always
