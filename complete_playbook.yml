@@ -9,6 +9,8 @@
     - wireless-configuration
     - ups-pico-setup
     - ola-install
+    - ola-configure-usb-dmx-adapter
     - baaahs-lights-server-install
     - baaahs-cadence-install
+    - baaahs-osc-layout-server
   become: yes

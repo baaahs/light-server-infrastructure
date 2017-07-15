@@ -1,9 +1,0 @@
-[Unit]
-Description=Execute OLA Universe Watchdog once per minute
-
-[Timer]
-OnCalendar=minutely
-Unit={{baaahs_ola_universe_watchdog}}.service
-
-[Install]
-WantedBy=multi-user.target
