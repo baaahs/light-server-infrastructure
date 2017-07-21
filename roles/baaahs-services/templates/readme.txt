@@ -39,3 +39,4 @@ To map sheep panels / panel setup, do the following:
 Common problems and resolutions:
 
  1. If the DMX USB adapter is absent when the OLA daemon starts, the universe will be removed. In this case, connect or ensure the connection of the USB DMX adapter, and open the OLA console at http://{{rpi_wlan_interface_ip}}:9090 with the ID: {{dmx_universe_id}} and the name {{dmx_universe_name}}.
+

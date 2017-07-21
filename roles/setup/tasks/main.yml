@@ -73,3 +73,10 @@
     extra_opts: ["-j"]
     mode: "u=rwx,g=rx,o=rx"
   ignore_errors: True
+
+- name: Install the readme
+  template:
+    src: readme.txt
+    dest: ~/readme.txt
+  become: true
+  become_user: "{{ baaahs_username }}"

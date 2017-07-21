@@ -30,5 +30,8 @@ echo "# of WIFI connections........$WIFI_CLIENTS clients"
 echo "RPI CPU Temp.................$RPI_CPU_TEMP C"
 echo "Power mode...................$PICO_UPS_POWERMODE"
 echo "Battery Charge Percentage....$PICO_UPS_BATTERY_CHARGE_PERCENTAGE"
-echo "Battery Voltage..............$PICO_UPS_BATTERY_VOLTAGE"
-echo "PI Voltage...................$PI_VOLTAGE"
+
+if [ -f ~/readme.txt ]
+then
+    cat ~/readme.txt
+fi
