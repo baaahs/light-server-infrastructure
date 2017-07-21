@@ -11,13 +11,16 @@ rpi_wlan_last_dhcp_ip: "{{ rpi_wlan_cidr  | ipaddr(-2) | ipaddr('address') }}"
 rpi_wlan_ssid: baaahs
 rpi_wlan_wpa_passphrase: baaahs2017
 rpi_wlan_channel: 6
-ola_version: 0.10.4
+ola_version: 0.10.5
 ola_server_name: BAAAHS Lights
 ola_user_and_group: olad
-baaahs_primary_username: baaahs
-baaahs_primary_password: armadildo
-baaahs_git_install_local_dir: lights
-baaahs_layout_server_install_local_dir: layout_server
+openssl_salt: iritis_online_stem_clay_afro
+baaahs_username: baaahs
+baaahs_password: armadillo
+baaahs_lights_install_dir: lights
+baaahs_cadence_install_dir: cadence
+baaahs_layout_server_install_dir: layout_server
+baaahs_layout_server_layout_file: BAAAHS Main.touchosc
 baaahs_ola_universe_watchdog: ola_universe_watchdog
 dmx_universe_name: usb-outbound-dmx
 dmx_universe_id: 0

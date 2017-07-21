@@ -22,7 +22,7 @@ PICO_UPS_BATTERY_VOLTAGE=$(pico_ups_battery_voltage)
 echo "Service Stats:"
 echo "The olad service is..........$(if [ $OLAD_SERVICE_ACTIVE -eq 0 ]; then echo "active"; else echo "inactive"; fi)"
 echo "The lights server is.........$(if [ $LIGHTS_SERVICE_ACTIVE -eq 0 ]; then echo "active"; else echo "inactive"; fi)"
-echo "The OSC layout server is.....$(if [ $OSC_LAYOUT_SERVICE_ACTIVE -eq 0 ]; then echo "active"; else echo "inactive"; fi)"
+echo "The osc_layout_server is.....$(if [ $OSC_LAYOUT_SERVICE_ACTIVE -eq 0 ]; then echo "active"; else echo "inactive"; fi)"
 echo "DMX mapping age..............$MAPPING_LASTMOD days"
 echo ""
 echo "Hardware Stats:"

@@ -1,12 +1,16 @@
 ---
 
+- name: compute hashed baaahs user account password
+  command: "openssl passwd -salt {{ openssl_salt }} -1 {{ baaahs_password }}"
+  register: hashed_baaahs_password
+
 - name: add baaahs user
   user:
-    name: '{{ baaahs_primary_username }}'
+    name: '{{ baaahs_username }}'
     shell: /bin/bash
-    groups: sudo
+    groups: "sudo,audio,video,i2c"
     append: yes
-    password: '{{ baaahs_primary_password }}'
+    password: "{{ hashed_baaahs_password.stdout }}"
 
 - name: install package requirements for baaahs light server
   apt:
@@ -22,25 +26,24 @@
   with_items:
     - CherryPy
     - https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/pybonjour/pybonjour-1.1.1.zip
-    - cachetools
     - pyalsaaudio
 
 - name: Clone master branch of BAAAHS lights
   git:
     repo: 'https://github.com/baaahs/lights.git'
-    dest: '~/{{ baaahs_git_install_local_dir }}'
+    dest: '~/{{ baaahs_lights_install_dir }}'
     version: master
     force: yes
   become: true
-  become_user: '{{ baaahs_primary_username }}'
+  become_user: '{{ baaahs_username }}'
 
 - name: change the mode from simulator to ola (currently dangerous)
   lineinfile:
-    dest: '~/{{ baaahs_git_install_local_dir }}/data/config.json'
+    dest: '~/{{ baaahs_lights_install_dir }}/data/config.json'
     regexp: '"mode": "simulator",'
     line: '"mode": "ola",'
   become: true
-  become_user: '{{ baaahs_primary_username }}'
+  become_user: '{{ baaahs_username }}'
 
 - name: install lights systemd unit file
   template:
@@ -57,11 +60,11 @@
 - name: Clone master branch of BAAAHS OSC Layout Server
   git:
     repo: 'https://github.com/baaahs/osc-layout-server.git'
-    dest: '~/{{ baaahs_layout_server_install_local_dir }}'
+    dest: '~/{{ baaahs_layout_server_install_dir }}'
     version: master
     force: yes
   become: true
-  become_user: '{{ baaahs_primary_username }}'
+  become_user: '{{ baaahs_username }}'
 
 - name: install osc layout server systemd unit file
   template:
@@ -75,6 +78,15 @@
     state: started
     daemon_reload: yes
 
+- name: Clone master branch of BAAAHS cadence
+  git:
+    repo: 'https://github.com/baaahs/cadence.git'
+    dest: '~/{{ baaahs_cadence_install_dir }}'
+    version: master
+    force: yes
+  become: true
+  become_user: '{{ baaahs_username }}'
+
 - name: USB sound cards are registered as card 1
   lineinfile:
     dest: /usr/share/alsa/alsa.conf
@@ -86,3 +98,10 @@
     dest: /usr/share/alsa/alsa.conf
     regexp: '^defaults.pcm.card 0'
     line: 'defaults.pcm.card 1'
+
+- name: Install the readme
+  template:
+    src: readme.txt
+    dest: ~/readme.txt
+  become: true
+  become_user: "{{ baaahs_username }}"

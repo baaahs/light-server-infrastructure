@@ -4,8 +4,8 @@ After=multi-user.target olad.service
 
 [Service]
 User=baaahs
-WorkingDirectory=/home/{{baaahs_primary_username}}/{{baaahs_git_install_local_dir}}
-ExecStart=/usr/bin/python /home/{{baaahs_primary_username}}/{{baaahs_git_install_local_dir}}/go.py
+WorkingDirectory=/home/{{baaahs_username}}/{{baaahs_lights_install_dir}}
+ExecStart=/usr/bin/python /home/{{baaahs_username}}/{{baaahs_lights_install_dir}}/go.py
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
 Restart=always
