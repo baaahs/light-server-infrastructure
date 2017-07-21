@@ -79,4 +79,4 @@
     src: readme.txt
     dest: ~/readme.txt
   become: true
-  become_user: "{{ baaahs_username }}"
+  become_user: pi
