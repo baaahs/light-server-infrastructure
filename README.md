@@ -50,7 +50,7 @@ First, install [ansible](http://docs.ansible.com/ansible/index.html) via brew; `
 
 Next, execute this playbook against the `baaahslights.local` server, using a vault password obtained by contacting [Josh Durbin](https://github.com/joshdurbin).
 
-Ex: `ansible-playbook playbook.yml -i inventory.dist --ask-vault-pass`
+Ex: `./build_baaahs_lights_server.sh`
  
 # ADMINISTRATION OF THE SERVER
 There are three pathways onto the Raspberry PI lights server...
