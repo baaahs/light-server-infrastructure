@@ -11,6 +11,11 @@ iface lo inet loopback
 
 iface eth0 inet manual
 
+auto eth0:1
+iface eth0:1 inet static
+address {{ rpi_lan_interface_ip }}
+netmask {{ rpi_lan_interface_netmask }}
+
 allow-hotplug wlan0
 iface wlan0 inet dhcp
     wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
