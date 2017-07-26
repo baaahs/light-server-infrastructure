@@ -23,6 +23,6 @@ iface wlan0 inet dhcp
 allow-hotplug wlan1
 iface wlan1 inet static
     address {{ rpi_wlan_interface_ip }}
-    netmask 255.255.255.0
+    netmask {{ rpi_wlan_interface_netmask }}
     network {{ rpi_wlan_interface_network }}
     broadcast {{ rpi_wlan_interface_broadcast }}

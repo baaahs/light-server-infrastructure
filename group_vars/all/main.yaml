@@ -4,6 +4,7 @@ locale: en_US.UTF-8
 sd_card_overlock: 100
 rpi_wlan_cidr: 172.2.1.0/24
 rpi_wlan_interface_ip: "{{ rpi_wlan_cidr | ipaddr(1) | ipaddr('address') }}"
+rpi_wlan_interface_netmask: "{{ rpi_wlan_cidr | ipaddr(1) | ipaddr('netmask') }}"
 rpi_wlan_interface_network: "{{ rpi_wlan_cidr | ipaddr('network') }}"
 rpi_wlan_interface_broadcast: "{{ rpi_wlan_cidr | ipaddr('broadcast') }}"
 rpi_wlan_first_dhcp_ip: "{{ rpi_wlan_cidr  | ipaddr(10) | ipaddr('address') }}"
