@@ -2,11 +2,11 @@
 
 - hosts: baaahs-lights-server
   roles:
-    - setup
-    - performance-optimizations
-    - endurance-optimizations
-    - network-configuration
-    - ups-pico-setup
+#    - setup
+#    - performance-optimizations
+#    - endurance-optimizations
+#    - network-configuration
+#    - ups-pico-setup
     - ola-install
-    - baaahs-services
+#    - baaahs-services
   become: yes
