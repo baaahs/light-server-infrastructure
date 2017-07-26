@@ -2,7 +2,7 @@ timezone: US/Pacific
 keyboard_layout: us
 locale: en_US.UTF-8
 sd_card_overlock: 100
-rpi_wlan_cidr: 172.24.1.0/24
+rpi_wlan_cidr: 172.2.1.0/24
 rpi_wlan_interface_ip: "{{ rpi_wlan_cidr | ipaddr(1) | ipaddr('address') }}"
 rpi_wlan_interface_network: "{{ rpi_wlan_cidr | ipaddr('network') }}"
 rpi_wlan_interface_broadcast: "{{ rpi_wlan_cidr | ipaddr('broadcast') }}"
@@ -11,7 +11,7 @@ rpi_wlan_last_dhcp_ip: "{{ rpi_wlan_cidr  | ipaddr(-2) | ipaddr('address') }}"
 rpi_wlan_ssid: baaahs
 rpi_wlan_wpa_passphrase: baaahs2017
 rpi_wlan_channel: 6
-rpi_lan_cidr: 192.168.1.0/24
+rpi_lan_cidr: 172.1.1.0/24
 rpi_lan_interface_ip: "{{ rpi_lan_cidr | ipaddr(1) | ipaddr('address') }}"
 rpi_lan_interface_netmask: "{{ rpi_lan_cidr | ipaddr(1) | ipaddr('netmask') }}"
 ola_version: 0.10.5

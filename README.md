@@ -55,14 +55,12 @@ Ex: `./build_baaahs_lights_server.sh`
 # ADMINISTRATION OF THE SERVER
 There are three pathways onto the Raspberry PI lights server...
 
-1. via the RJ45 ethernet device on a pre-existing network
-2. via the internal wifi adapter on a pre-configured network
-3. via the wireless network the server creates, `baaahs`, with the WPA2 key `baaahs2017`
-
-If you're using option #1 or #2 above, you'll need to scan the network or otherwise obtain the IP assigend by the
-networks DHCP subsystem. If you're using option #3, the Raspberry PI can be reached at `172.24.1.1`.
+1. via the RJ45 ethernet device on a pre-existing network (accessible via DHCP assigned address OR via manual assignment on the work 172.1.1.0/24 - RPI3 is at 172.1.1.1)
+2. via the internal wifi adapter on a pre-configured network (accessible via DHCP assigned address)
+3. via the wireless network the server creates, `baaahs`, with the WPA2 key `baaahs2017` (RPI3 is at 172.2.1.1)
 
 There are two web-based interfaces available:
 
 - [OLA Daemon/interface](http://baaahslights.local:9090/new/#/) at port `9090`
 - [BAAAHS Light Server](http://baaahslights.local:9990/) at port `9990`
+- [OSC Layout Server](http://baaahslights.local:9658/) at port `9658`
