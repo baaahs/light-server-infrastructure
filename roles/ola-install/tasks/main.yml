@@ -40,7 +40,8 @@
        - libmicrohttpd-dev
        - libncurses5-dev
   when: (ola_installed|failed) or
-        (reported_ola_version != ola_version)
+        (reported_ola_version != ola_version) or
+        (force_reinstall_ola is defined)
 
 - name: download and extract Open Lighting Architecture source code
   unarchive:
@@ -48,7 +49,8 @@
     dest: /tmp
     remote_src: True
   when: (ola_installed|failed) or
-        (reported_ola_version != ola_version)
+        (reported_ola_version != ola_version) or
+        (force_reinstall_ola is defined)
 
 - name: Build Open Lighting Architecture source code
   command: '{{ item }}'
@@ -60,7 +62,8 @@
     - make install
     - ldconfig
   when: (ola_installed|failed) or
-        (reported_ola_version != ola_version)
+        (reported_ola_version != ola_version) or
+        (force_reinstall_ola is defined)
 
 - name: create olad group account
   group:
