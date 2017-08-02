@@ -4,7 +4,7 @@
 
 This project contains the necessary roles to take commodity off-the-shelf hardware, listed below, and create a working BAAAHS light control server. The light control server uses its internal wifi adapter to connect to pre-determined networks, creates a `baaahs` network for offline administration/OSC functionality/etc, runs olad, the BAAAHS python show server, and sound feed back software. The server is principally responsible for controlling the ~150 panels that makeup the deployed sheep.
 
-For a full overview of the BAAAHS lights infrastructure and where the server piece fits in, run through [this deck](http://slides.com/joshdurbin/baaahs-lights/). 
+For a full overview of the BAAAHS lights infrastructure and where the server piece fits in, run through [this deck](http://slides.com/joshdurbin/baaahs-lights/).
 
 # PARTS LIST
 The parts required to build a server include:
