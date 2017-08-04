@@ -57,7 +57,7 @@
   args:
     chdir: '/tmp/ola-{{ ola_version }}'
   with_items:
-    - ./configure --enable-python-libs --disable-all-plugins --enable-usbpro
+    - ./configure --enable-python-libs --disable-all-plugins --enable-usbpro --enable-artnet
     - make all
     - make install
     - ldconfig
