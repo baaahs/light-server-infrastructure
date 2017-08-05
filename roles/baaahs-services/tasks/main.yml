@@ -12,6 +12,14 @@
     append: yes
     password: "{{ hashed_baaahs_password.stdout }}"
 
+- name: enable passwordless sudo-ing for baaahs
+  template:
+    src: 011_baaahs-nopasswd.j2
+    dest: /etc/sudoers.d/011_baaahs-nopasswd
+    owner: root
+    group: root
+    mode: 'u+r,g+r'
+
 - name: install package requirements for baaahs light server
   apt:
     pkg: "{{ item }}"
