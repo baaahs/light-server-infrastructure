@@ -40,7 +40,7 @@
   git:
     repo: 'https://github.com/baaahs/lights.git'
     dest: '~/{{ baaahs_lights_install_dir }}'
-    version: master
+    version: baaahs-playa-2017
     force: yes
   become: true
   become_user: '{{ baaahs_username }}'
