@@ -9,33 +9,92 @@
 # Short-Description: Create needed directories on /var/log/ for tmpfs at startup
 # Description:       Create needed directories on /var/log/ for tmpfs at startup
 ### END INIT INFO
-# needed Dirs
+
 DIR[0]=/var/log/apt
-DIR[1]=/var/log/fsck
-DIR[2]=/var/log/lastlog
-case "${1:-''}" in
+PRM[0]="root.root"
+DIR[1]=/var/log/ntpstats
+PRM[1]="ntp.ntp"
+DIR[2]=/var/log/samba
+PRM[2]="root.adm"
+
+FILE[0]=/var/log/alternatives.log
+FILEPRM[0]="root.root"
+FILE[1]=/var/log/auth.log
+FILEPRM[1]="root.adm"
+FILE[2]=/var/log/boot.log
+FILEPRM[2]="root.root"
+FILE[3]=/var/log/bootstrap.log
+FILEPRM[3]="root.root"
+FILE[4]=/var/log/btmp
+FILEPRM[4]="root.utmp"
+FILE[5]=/var/log/daemon.log
+FILEPRM[5]="root.adm"
+FILE[6]=/var/log/debug
+FILEPRM[6]="root.adm"
+FILE[7]=/var/log/dpkg.log
+FILEPRM[7]="root.root"
+FILE[8]=/var/log/faillog
+FILEPRM[8]="root.root"
+FILE[9]=/var/log/kern.log
+FILEPRM[9]="root.adm"
+FILE[10]=/var/log/lastlog
+FILEPRM[10]="root.utmp"
+FILE[11]=/var/log/messages
+FILEPRM[11]="root.adm"
+FILE[12]=/var/log/syslog
+FILEPRM[12]="root.adm"
+FILE[13]=/var/log/user.log
+FILEPRM[13]="root.adm"
+FILE[14]=/var/log/wtmp
+FILEPRM[14]="root.utmp"
+
+case "${1:-}" in
   start)
-{% raw %}        typeset -i i=0 max=${#DIR[*]}
-{% endraw %}
-        while (( i < max ))
-        do
-                mkdir  ${DIR[$i]}
-                chmod 755 ${DIR[$i]}
-                i=i+1
-        done
-        # set rights
-        chown www-data.www-data ${DIR[0]}
+    # dir creation
+    typeset -i i=0 max=$(echo "${!DIR[*]}" | tr " " "\n" | sort -nr | head -n1)
+    while (( i <= max ));do
+      if [ -n "${DIR[$i]}" ];then
+        mkdir -p ${DIR[$i]}
+        chmod 755 ${DIR[$i]}
+      fi
+      i=i+1
+    done
+    # dir set rights
+    typeset -i i=0 max=$(echo "${!PRM[*]}" | tr " " "\n" | sort -nr | head -n1)
+    while (( i <= max ));do
+      if [ -n "${PRM[$i]}" ];then
+        chown -R ${PRM[$i]} ${DIR[$i]}
+      fi
+      i=i+1
+    done
+    # file creation
+    typeset -i i=0 max=$(echo "${!FILE[*]}" | tr " " "\n" | sort -nr | head -n1)
+    while (( i <= max ));do
+      if [ -n "${FILE[$i]}" ];then
+        touch ${FILE[$i]}
+        chmod 644 ${FILE[$i]}
+      fi
+      i=i+1
+    done
+    # file set rights
+    typeset -i i=0 max=$(echo "${!FILEPRM[*]}" | tr " " "\n" | sort -nr | head -n1)
+    while (( i <= max ));do
+      if [ -n "${FILEPRM[$i]}" ];then
+        chown ${FILEPRM[$i]} ${FILE[$i]}
+      fi
+      i=i+1
+    done
     ;;
   stop)
     ;;
   restart)
-   ;;
+    ;;
   reload|force-reload)
-   ;;
+    ;;
   status)
-   ;;
+    ;;
   *)
-   echo "Usage: $SELF start"
-   exit 1
-   ;;
+    echo "Usage: $SELF start"
+    exit 1
+    ;;
 esac

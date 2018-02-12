@@ -24,21 +24,13 @@
     - busybox-syslogd
     - ntp
 
-- name: update tmpfs defaults
-  lineinfile:
+- name: install tmpfs file
+  template:
+    src: tmpfs.j2
     dest: /etc/default/tmpfs
-    regexp: '^#?{{ item.key }}=(.*)$'
-    line: '{{ item.key }}={{ item.value }}'
-    state: present
-  with_items:
-    - { key: 'RAMLOCK', value: 'yes' }
-    - { key: 'RAMSHM', value: 'yes' }
-    - { key: 'RAMTMP', value: 'yes' }
-    - { key: 'TMPFS_SIZE', value: '10%VM' }
-    - { key: 'RUN_SIZE', value: '10M' }
-    - { key: 'LOCK_SIZE', value: '5M' }
-    - { key: 'SHM_SIZE', value: '10M' }
-    - { key: 'TMP_SIZE', value: '25M' }
+    owner: root
+    group: root
+    mode: 'u=rw,g=r,o=r'
 
 - name: Update fstab
   lineinfile:

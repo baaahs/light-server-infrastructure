@@ -40,6 +40,7 @@
 
 - name: run rpi-update
   shell: rpi-update
+  ignore_errors: True
 
 - name: Update message of the day
   template:
@@ -64,15 +65,6 @@
 
 - name: Restart ssh
   service: name=ssh state=restarted
-
-- name: Install the UPS Pico scripts
-  unarchive:
-    src: 'https://github.com/baaahs/ups-pico-scripts/archive/master.zip'
-    dest: /usr/local/bin
-    remote_src: True
-    extra_opts: ["-j"]
-    mode: "u=rwx,g=rx,o=rx"
-  ignore_errors: True
 
 - name: Install the readme
   template:

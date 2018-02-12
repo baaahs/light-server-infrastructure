@@ -1,5 +1,14 @@
 ---
 
+- name: Install the UPS Pico scripts
+  unarchive:
+    src: 'https://github.com/baaahs/ups-pico-scripts/archive/master.zip'
+    dest: /usr/local/bin
+    remote_src: True
+    extra_opts: ["-j"]
+    mode: "u=rwx,g=rx,o=rx"
+  ignore_errors: True
+
 - name: install python RPI GPIO
   apt:
     pkg: python-rpi.gpio
