@@ -10,12 +10,12 @@ rpi_wlan_interface_broadcast: "{{ rpi_wlan_cidr | ipaddr('broadcast') }}"
 rpi_wlan_first_dhcp_ip: "{{ rpi_wlan_cidr  | ipaddr(10) | ipaddr('address') }}"
 rpi_wlan_last_dhcp_ip: "{{ rpi_wlan_cidr  | ipaddr(-2) | ipaddr('address') }}"
 rpi_wlan_ssid: baaahs
-rpi_wlan_wpa_passphrase: baaahsonplaya
+rpi_wlan_wpa_passphrase: gaysheep
 rpi_wlan_channel: 6
 rpi_lan_cidr: 172.16.1.0/24
 rpi_lan_interface_ip: "{{ rpi_lan_cidr | ipaddr(1) | ipaddr('address') }}"
 rpi_lan_interface_netmask: "{{ rpi_lan_cidr | ipaddr(1) | ipaddr('netmask') }}"
-ola_version: 0.10.7
+ola_version: 0.10.5
 ola_server_name: BAAAHS Lights
 ola_user_and_group: olad
 openssl_salt: bL_rp018
@@ -27,7 +27,7 @@ baaahs_layout_server_install_dir: "/home/{{ baaahs_username }}/layout_server"
 baaahs_readme_destination: "/home/{{ baaahs_username }}/readme.txt"
 baaahs_layout_server_layout_file: BAAAHS Main.touchosc
 baaahs_ola_universe_watchdog: ola_universe_watchdog
-baaahs_lights_checkout_branch: baaahs-playa-2017
+baaahs_lights_checkout_branch: baaahs-playa-2018
 dmx_universe_name: usb-outbound-dmx
 dmx_universe_id: 0
 panda_wireless_adapter_oui: 9c:ef:d5

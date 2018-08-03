@@ -9,10 +9,10 @@
 - name: Get ola version
   shell: "olad -v | awk '{print $4}'"
   register: ola_version_shell_result
-  when: ola_installed|succeeded
+  when: ola_installed is succeeded
 
 - set_fact: reported_ola_version="{{ ola_version_shell_result.stdout }}"
-  when: ola_installed|succeeded
+  when: ola_installed is succeeded
 
 - name: Install packages required to compile Open Lighting Architecture source
   apt:
@@ -39,7 +39,7 @@
        - liblo-dev
        - libmicrohttpd-dev
        - libncurses5-dev
-  when: (ola_installed|failed) or
+  when: (ola_installed is failed) or
         (reported_ola_version != ola_version) or
         (force_reinstall_ola is defined)
 
@@ -48,7 +48,7 @@
     src: 'https://github.com/OpenLightingProject/ola/releases/download/{{ ola_version }}/ola-{{ ola_version }}.tar.gz'
     dest: /tmp
     remote_src: True
-  when: (ola_installed|failed) or
+  when: (ola_installed is failed) or
         (reported_ola_version != ola_version) or
         (force_reinstall_ola is defined)
 
@@ -61,7 +61,7 @@
     - make all
     - make install
     - ldconfig
-  when: (ola_installed|failed) or
+  when: (ola_installed is failed) or
         (reported_ola_version != ola_version) or
         (force_reinstall_ola is defined)
 
