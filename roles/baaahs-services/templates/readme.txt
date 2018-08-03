@@ -14,3 +14,8 @@ OLA New (beta) ---------> http://{{rpi_wlan_interface_ip}}:9090/new/#/
 BAAAHS Lights Server ---> http://{{rpi_wlan_interface_ip}}:9990/
 OSC Layout Server ------> http://{{rpi_wlan_interface_ip}}:9658/
 
+Startup notes:
+
+The server starts up in white out mode, sending full signal to all frames ([255] * 512). In order to run shows you must
+stop the whiteout service and start the lights service. You must do this each time the server is restarted! To do so
+execute the script ./go_lights.sh and to flip back, execute ./go_whiteout.sh.

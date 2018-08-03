@@ -9,6 +9,9 @@ LIGHTS_SERVICE_ACTIVE=$?
 systemctl -q is-active osc_layout_server
 OSC_LAYOUT_SERVICE_ACTIVE=$?
 
+systemctl -q is-active whiteout
+WHITE_OUT_SERVICE_ACTIVE=$?
+
 RPI_CPU_TEMP=$(/opt/vc/bin/vcgencmd measure_temp| sed "s/[^0-9.]//g")
 WIFI_CLIENTS=$(iw dev wlan1 station dump | grep Station | wc -l)
 
@@ -22,6 +25,7 @@ PICO_UPS_BATTERY_VOLTAGE=$(pico_ups_battery_voltage)
 echo "Service Stats:"
 echo "The olad service is..........$(if [ $OLAD_SERVICE_ACTIVE -eq 0 ]; then echo "active"; else echo "inactive"; fi)"
 echo "The lights server is.........$(if [ $LIGHTS_SERVICE_ACTIVE -eq 0 ]; then echo "active"; else echo "inactive"; fi)"
+echo "The whiteout server is.......$(if [ $WHITE_OUT_SERVICE_ACTIVE -eq 0 ]; then echo "active"; else echo "inactive"; fi)"
 echo "The osc_layout_server is.....$(if [ $OSC_LAYOUT_SERVICE_ACTIVE -eq 0 ]; then echo "active"; else echo "inactive"; fi)"
 echo "DMX mapping age..............$MAPPING_LASTMOD days"
 echo ""

@@ -64,6 +64,32 @@
 - name: start lights
   systemd:
     name: lights
+    enabled: no
+    state: stopped
+    daemon_reload: yes
+
+- name: Clone master branch of BAAAHS white-out
+  git:
+    repo: 'https://github.com/baaahs/white-out.git'
+    dest: '{{ baaahs_white_out_install_dir }}'
+    version: '{{ baaahs_white_out_checkout_branch }}'
+    force: yes
+
+- name: Change permissions of BAAAHS white-out source
+  file:
+    path: '{{ baaahs_white_out_install_dir }}'
+    owner: '{{ baaahs_username }}'
+    group: '{{ baaahs_username }}'
+    recurse: yes
+
+- name: install white-out systemd unit file
+  template:
+    src: baaahs_white_out.j2
+    dest: /etc/systemd/system/whiteout.service
+
+- name: start whiteout
+  systemd:
+    name: whiteout
     enabled: yes
     state: started
     daemon_reload: yes
@@ -130,3 +156,27 @@
     path: '{{ baaahs_readme_destination }}'
     owner: '{{ baaahs_username }}'
     group: '{{ baaahs_username }}'
+
+- name: Install the flip to lights script
+  template:
+    src: readme.txt
+    dest: '{{ baaahs_flip_to_lights_destination }}'
+
+- name: Change permissions of flip to lights readme
+  file:
+    path: '{{ baaahs_flip_to_lights_destination }}'
+    owner: '{{ baaahs_username }}'
+    group: '{{ baaahs_username }}'
+    mode: 'u+x'
+
+- name: Install the flip to whiteout script
+  template:
+    src: readme.txt
+    dest: '{{ baaahs_flip_to_whiteout_destination }}'
+
+- name: Change permissions of flip to whiteout readme
+  file:
+    path: '{{ baaahs_flip_to_whiteout_destination }}'
+    owner: '{{ baaahs_username }}'
+    group: '{{ baaahs_username }}'
+    mode: 'u+x'
