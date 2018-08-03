@@ -19,3 +19,4 @@ Startup notes:
 The server starts up in white out mode, sending full signal to all frames ([255] * 512). In order to run shows you must
 stop the whiteout service and start the lights service. You must do this each time the server is restarted! To do so
 execute the script ./go_lights.sh and to flip back, execute ./go_whiteout.sh.
+

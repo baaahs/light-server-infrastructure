@@ -159,7 +159,7 @@
 
 - name: Install the flip to lights script
   template:
-    src: readme.txt
+    src: flip_whiteout_to_lights.sh
     dest: '{{ baaahs_flip_to_lights_destination }}'
 
 - name: Change permissions of flip to lights readme
@@ -171,7 +171,7 @@
 
 - name: Install the flip to whiteout script
   template:
-    src: readme.txt
+    src: flip_lights_to_whiteout.sh
     dest: '{{ baaahs_flip_to_whiteout_destination }}'
 
 - name: Change permissions of flip to whiteout readme
