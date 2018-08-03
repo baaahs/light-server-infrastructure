@@ -62,7 +62,7 @@ There are three pathways onto the Raspberry PI lights server...
 
 1. via the RJ45 ethernet device on a pre-existing network (accessible via DHCP assigned address OR via manual assignment on the work 172.16.1.0/24 - RPI3 is at 172.16.1.1)
 2. via the internal wifi adapter on a pre-configured network (accessible via DHCP assigned address)
-3. via the wireless network the server creates, `baaahs`, with the WPA2 key `baaahs2017` (RPI3 is at 172.16.2.1)
+3. via the wireless network the server creates, `baaahs`, with the WPA2 key `gaysheep` (RPI3 is at 172.16.2.1)
 
 There are two web-based interfaces available:
 
