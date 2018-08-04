@@ -5,7 +5,7 @@ After=multi-user.target olad.service
 [Service]
 User=baaahs
 WorkingDirectory={{baaahs_white_out_install_dir}}
-ExecStart=/usr/bin/python {{baaahs_white_out_install_dir}}/go.py
+ExecStart={{baaahs_white_out_install_dir}}/go.py
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
 Restart=always
