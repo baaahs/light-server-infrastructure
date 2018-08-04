@@ -68,23 +68,23 @@
     state: stopped
     daemon_reload: yes
 
-- name: Clone master branch of BAAAHS white-out
+- name: Clone master branch of BAAAHS dmx-broadcaster
   git:
-    repo: 'https://github.com/baaahs/white-out.git'
-    dest: '{{ baaahs_white_out_install_dir }}'
-    version: '{{ baaahs_white_out_checkout_branch }}'
+    repo: 'https://github.com/baaahs/single-value-dmx-broadcaster.git'
+    dest: '{{ baaahs_dmx_broadcaster_install_dir }}'
+    version: '{{ baaahs_dmx_broadcaster_checkout_branch }}'
     force: yes
 
-- name: Change permissions of BAAAHS white-out source
+- name: Change permissions of BAAAHS dmx-broadcaster source
   file:
-    path: '{{ baaahs_white_out_install_dir }}'
+    path: '{{ baaahs_dmx_broadcaster_install_dir }}'
     owner: '{{ baaahs_username }}'
     group: '{{ baaahs_username }}'
     recurse: yes
 
-- name: install white-out systemd unit file
+- name: install whiteout systemd unit file
   template:
-    src: baaahs_white_out.j2
+    src: baaahs_whiteout.j2
     dest: /etc/systemd/system/whiteout.service
 
 - name: start whiteout
@@ -180,3 +180,11 @@
     owner: '{{ baaahs_username }}'
     group: '{{ baaahs_username }}'
     mode: 'u+x'
+
+- name: Install vimrc file
+  template:
+    src: vimrc
+    dest: '{{ baaahs_vimrc_destination }}'
+    owner: '{{ baaahs_username }}'
+    group: '{{ baaahs_username }}'
+    mode: 'u+r,g+r'

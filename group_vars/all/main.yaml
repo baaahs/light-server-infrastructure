@@ -22,7 +22,7 @@ openssl_salt: bL_rp018
 baaahs_username: baaahs
 baaahs_password: armadillo
 baaahs_lights_install_dir: "/home/{{ baaahs_username }}/lights"
-baaahs_white_out_install_dir: "/home/{{ baaahs_username }}/white-out"
+baaahs_dmx_broadcaster_install_dir: "/home/{{ baaahs_username }}/dmx-broadcaster"
 baaahs_cadence_install_dir: "/home/{{ baaahs_username }}/cadence"
 baaahs_layout_server_install_dir: "/home/{{ baaahs_username }}/layout_server"
 baaahs_readme_destination: "/home/{{ baaahs_username }}/readme.txt"
@@ -31,9 +31,10 @@ baaahs_flip_to_whiteout_destination: "/home/{{ baaahs_username }}/go_whiteout.sh
 baaahs_layout_server_layout_file: BAAAHS Main.touchosc
 baaahs_ola_universe_watchdog: ola_universe_watchdog
 baaahs_lights_checkout_branch: baaahs-playa-2018
-baaahs_white_out_checkout_branch: master
+baaahs_dmx_broadcaster_checkout_branch: master
 dmx_universe_name: usb-outbound-dmx
 dmx_universe_id: 0
 panda_wireless_adapter_oui: 9c:ef:d5
 raspberry_pi_foundation_adapter_oui: b8:27:eb
 human_readable_server_name: BAAAHS Lights Server
+baaahs_vimrc_destination: "/home/{{ baaahs_username }}/.vimrc"

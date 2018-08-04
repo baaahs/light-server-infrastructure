@@ -1,11 +1,11 @@
 [Unit]
-Description=BAAAHS White Out
+Description=BAAAHS Whiteout Broadcaster
 After=multi-user.target olad.service
 
 [Service]
 User=baaahs
-WorkingDirectory={{baaahs_white_out_install_dir}}
-ExecStart={{baaahs_white_out_install_dir}}/go.py
+WorkingDirectory={{baaahs_dmx_broadcaster_install_dir}}
+ExecStart={{baaahs_dmx_broadcaster_install_dir}}/go.py
 ExecReload=/bin/kill -HUP $MAINPID
 KillMode=process
 Restart=always
