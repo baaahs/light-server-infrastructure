@@ -13,6 +13,7 @@ OLA --------------------> http://{{rpi_wlan_interface_ip}}:9090/ola.html
 OLA New (beta) ---------> http://{{rpi_wlan_interface_ip}}:9090/new/#/
 BAAAHS Lights Server ---> http://{{rpi_wlan_interface_ip}}:9990/
 OSC Layout Server ------> http://{{rpi_wlan_interface_ip}}:9658/
+Web Control ------------> http://{{rpi_wlan_interface_ip}}:8080/
 
 Startup notes:
 

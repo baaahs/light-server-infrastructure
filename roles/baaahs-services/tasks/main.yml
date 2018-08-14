@@ -94,6 +94,32 @@
     state: started
     daemon_reload: yes
 
+- name: Clone master branch of BAAAHS Web Control
+  git:
+    repo: 'https://github.com/baaahs/web-control-interface.git'
+    dest: '{{ baaahs_web_control_install_dir }}'
+    version: master
+    force: yes
+
+- name: Change permissions of BAAAHS Web Control
+  file:
+    path: '{{ baaahs_web_control_install_dir }}'
+    owner: '{{ baaahs_username }}'
+    group: '{{ baaahs_username }}'
+    recurse: yes
+
+- name: install web control systemd unit file
+  template:
+    src: baaahs_web_control.j2
+    dest: /etc/systemd/system/web_control.service
+
+- name: start web control server
+  systemd:
+    name: web_control
+    enabled: yes
+    state: started
+    daemon_reload: yes
+
 - name: Clone master branch of BAAAHS OSC Layout Server
   git:
     repo: 'https://github.com/baaahs/osc-layout-server.git'

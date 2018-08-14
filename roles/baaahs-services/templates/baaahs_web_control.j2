@@ -1,0 +1,14 @@
+[Unit]
+Description=BAAAHS Web Control
+After=multi-user.target
+
+[Service]
+User=baaahs
+WorkingDirectory={{baaahs_web_control_install_dir}}
+ExecStart={{baaahs_web_control_install_dir}}/go.py
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

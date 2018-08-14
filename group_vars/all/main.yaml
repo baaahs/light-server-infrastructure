@@ -23,6 +23,7 @@ baaahs_username: baaahs
 baaahs_password: armadillo
 baaahs_lights_install_dir: "/home/{{ baaahs_username }}/lights"
 baaahs_dmx_broadcaster_install_dir: "/home/{{ baaahs_username }}/dmx-broadcaster"
+baaahs_web_control_install_dir: "/home/{{ baaahs_username }}/web_control"
 baaahs_cadence_install_dir: "/home/{{ baaahs_username }}/cadence"
 baaahs_layout_server_install_dir: "/home/{{ baaahs_username }}/layout_server"
 baaahs_readme_destination: "/home/{{ baaahs_username }}/readme.txt"
