@@ -1,0 +1,40 @@
+---
+
+- name: install pip requirements
+  pip:
+    name: "{{ item }}"
+  with_items:
+  - CherryPy
+  - https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/pybonjour/pybonjour-1.1.1.zip
+
+- name: Clone master branch of BAAAHS lights
+  git:
+    repo: 'https://github.com/baaahs/lights.git'
+    dest: '{{ baaahs_lights_install_dir }}'
+    version: '{{ baaahs_lights_checkout_branch }}'
+    force: yes
+
+- name: Change permissions of BAAAHS lights source
+  file:
+    path: '{{ baaahs_lights_install_dir }}'
+    owner: '{{ baaahs_username }}'
+    group: '{{ baaahs_username }}'
+    recurse: yes
+
+- name: change the mode from simulator to ola (currently dangerous)
+  lineinfile:
+    dest: '{{ baaahs_lights_install_dir }}/data/config.json'
+    regexp: '"mode": "simulator",'
+    line: '"mode": "ola",'
+
+- name: install lights systemd unit file
+  template:
+    src: baaahs_lights.j2
+    dest: /etc/systemd/system/lights.service
+
+- name: start lights
+  systemd:
+    name: lights
+    enabled: no
+    state: stopped
+    daemon_reload: yes

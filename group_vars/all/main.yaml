@@ -27,8 +27,6 @@ baaahs_web_control_install_dir: "/home/{{ baaahs_username }}/web_control"
 baaahs_cadence_install_dir: "/home/{{ baaahs_username }}/cadence"
 baaahs_layout_server_install_dir: "/home/{{ baaahs_username }}/layout_server"
 baaahs_readme_destination: "/home/{{ baaahs_username }}/readme.txt"
-baaahs_flip_to_lights_destination: "/home/{{ baaahs_username }}/go_lights.sh"
-baaahs_flip_to_whiteout_destination: "/home/{{ baaahs_username }}/go_whiteout.sh"
 baaahs_layout_server_layout_file: BAAAHS Main.touchosc
 baaahs_ola_universe_watchdog: ola_universe_watchdog
 baaahs_lights_checkout_branch: baaahs-playa-2018

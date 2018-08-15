@@ -1,0 +1,14 @@
+[Unit]
+Description=BAAAHS Cadence Service
+After=multi-user.target
+
+[Service]
+User=baaahs
+WorkingDirectory={{baaahs_cadence_install_dir}}
+ExecStart={{baaahs_cadence_install_dir}}/rms_tinker.py
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

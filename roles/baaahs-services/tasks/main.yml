@@ -20,158 +20,6 @@
     group: root
     mode: 'u+r,g+r'
 
-- name: install package requirements for baaahs light server
-  apt:
-    pkg: "{{ item }}"
-    state: latest
-  with_items:
-    - libavahi-compat-libdnssd1
-    - libasound2-dev
-
-- name: install pip requirements for baaahs light server
-  pip:
-    name: "{{ item }}"
-  with_items:
-    - CherryPy
-    - https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/pybonjour/pybonjour-1.1.1.zip
-    - pyalsaaudio
-
-- name: Clone master branch of BAAAHS lights
-  git:
-    repo: 'https://github.com/baaahs/lights.git'
-    dest: '{{ baaahs_lights_install_dir }}'
-    version: '{{ baaahs_lights_checkout_branch }}'
-    force: yes
-
-- name: Change permissions of BAAAHS lights source
-  file:
-    path: '{{ baaahs_lights_install_dir }}'
-    owner: '{{ baaahs_username }}'
-    group: '{{ baaahs_username }}'
-    recurse: yes
-
-- name: change the mode from simulator to ola (currently dangerous)
-  lineinfile:
-    dest: '{{ baaahs_lights_install_dir }}/data/config.json'
-    regexp: '"mode": "simulator",'
-    line: '"mode": "ola",'
-
-- name: install lights systemd unit file
-  template:
-    src: baaahs_lights.j2
-    dest: /etc/systemd/system/lights.service
-
-- name: start lights
-  systemd:
-    name: lights
-    enabled: no
-    state: stopped
-    daemon_reload: yes
-
-- name: Clone master branch of BAAAHS dmx-broadcaster
-  git:
-    repo: 'https://github.com/baaahs/single-value-dmx-broadcaster.git'
-    dest: '{{ baaahs_dmx_broadcaster_install_dir }}'
-    version: '{{ baaahs_dmx_broadcaster_checkout_branch }}'
-    force: yes
-
-- name: Change permissions of BAAAHS dmx-broadcaster source
-  file:
-    path: '{{ baaahs_dmx_broadcaster_install_dir }}'
-    owner: '{{ baaahs_username }}'
-    group: '{{ baaahs_username }}'
-    recurse: yes
-
-- name: install whiteout systemd unit file
-  template:
-    src: baaahs_whiteout.j2
-    dest: /etc/systemd/system/whiteout.service
-
-- name: start whiteout
-  systemd:
-    name: whiteout
-    enabled: yes
-    state: started
-    daemon_reload: yes
-
-- name: Clone master branch of BAAAHS Web Control
-  git:
-    repo: 'https://github.com/baaahs/web-control-interface.git'
-    dest: '{{ baaahs_web_control_install_dir }}'
-    version: master
-    force: yes
-
-- name: Change permissions of BAAAHS Web Control
-  file:
-    path: '{{ baaahs_web_control_install_dir }}'
-    owner: '{{ baaahs_username }}'
-    group: '{{ baaahs_username }}'
-    recurse: yes
-
-- name: install web control systemd unit file
-  template:
-    src: baaahs_web_control.j2
-    dest: /etc/systemd/system/web_control.service
-
-- name: start web control server
-  systemd:
-    name: web_control
-    enabled: yes
-    state: started
-    daemon_reload: yes
-
-- name: Clone master branch of BAAAHS OSC Layout Server
-  git:
-    repo: 'https://github.com/baaahs/osc-layout-server.git'
-    dest: '{{ baaahs_layout_server_install_dir }}'
-    version: master
-    force: yes
-
-- name: Change permissions of BAAAHS OSC Layout source
-  file:
-    path: '{{ baaahs_layout_server_install_dir }}'
-    owner: '{{ baaahs_username }}'
-    group: '{{ baaahs_username }}'
-    recurse: yes
-
-- name: install osc layout server systemd unit file
-  template:
-    src: baaahs_osc_layout_server.j2
-    dest: /etc/systemd/system/osc_layout_server.service
-
-- name: start osc layout server
-  systemd:
-    name: osc_layout_server
-    enabled: yes
-    state: started
-    daemon_reload: yes
-
-- name: Clone master branch of BAAAHS cadence
-  git:
-    repo: 'https://github.com/baaahs/cadence.git'
-    dest: '{{ baaahs_cadence_install_dir }}'
-    version: master
-    force: yes
-
-- name: Change permissions of BAAAHS cadence source
-  file:
-    path: '{{ baaahs_cadence_install_dir }}'
-    owner: '{{ baaahs_username }}'
-    group: '{{ baaahs_username }}'
-    recurse: yes
-
-- name: USB sound cards are registered as card 1
-  lineinfile:
-    dest: /usr/share/alsa/alsa.conf
-    regexp: '^defaults.ctl.card 0'
-    line: 'defaults.ctl.card 1'
-
-- name: USB sound cards are registered as card 1
-  lineinfile:
-    dest: /usr/share/alsa/alsa.conf
-    regexp: '^defaults.pcm.card 0'
-    line: 'defaults.pcm.card 1'
-
 - name: Install the readme
   template:
     src: readme.txt
@@ -183,30 +31,6 @@
     owner: '{{ baaahs_username }}'
     group: '{{ baaahs_username }}'
 
-- name: Install the flip to lights script
-  template:
-    src: flip_whiteout_to_lights.sh
-    dest: '{{ baaahs_flip_to_lights_destination }}'
-
-- name: Change permissions of flip to lights readme
-  file:
-    path: '{{ baaahs_flip_to_lights_destination }}'
-    owner: '{{ baaahs_username }}'
-    group: '{{ baaahs_username }}'
-    mode: 'u+x'
-
-- name: Install the flip to whiteout script
-  template:
-    src: flip_lights_to_whiteout.sh
-    dest: '{{ baaahs_flip_to_whiteout_destination }}'
-
-- name: Change permissions of flip to whiteout readme
-  file:
-    path: '{{ baaahs_flip_to_whiteout_destination }}'
-    owner: '{{ baaahs_username }}'
-    group: '{{ baaahs_username }}'
-    mode: 'u+x'
-
 - name: Install vimrc file
   template:
     src: vimrc
@@ -214,3 +38,9 @@
     owner: '{{ baaahs_username }}'
     group: '{{ baaahs_username }}'
     mode: 'u+r,g+r'
+
+- include: cadence.yml
+- include: dmx_broadcaster.yml
+- include: light_server.yml
+- include: osc_layout.yml
+- include: web_control.yml

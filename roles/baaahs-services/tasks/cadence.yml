@@ -1,0 +1,53 @@
+---
+
+- name: install package requirements for baaahs light server
+  apt:
+    pkg: "{{ item }}"
+    state: latest
+  with_items:
+  - libavahi-compat-libdnssd1
+  - libasound2-dev
+
+- name: install pip requirements for baaahs light server
+  pip:
+    name: "{{ item }}"
+  with_items:
+  - pyalsaaudio
+
+- name: Clone master branch of BAAAHS cadence
+  git:
+    repo: 'https://github.com/baaahs/cadence.git'
+    dest: '{{ baaahs_cadence_install_dir }}'
+    version: master
+    force: yes
+
+- name: Change permissions of BAAAHS cadence source
+  file:
+    path: '{{ baaahs_cadence_install_dir }}'
+    owner: '{{ baaahs_username }}'
+    group: '{{ baaahs_username }}'
+    recurse: yes
+
+- name: USB sound cards are registered as card 1
+  lineinfile:
+    dest: /usr/share/alsa/alsa.conf
+    regexp: '^defaults.ctl.card 0'
+    line: 'defaults.ctl.card 1'
+
+- name: USB sound cards are registered as card 1
+  lineinfile:
+    dest: /usr/share/alsa/alsa.conf
+    regexp: '^defaults.pcm.card 0'
+    line: 'defaults.pcm.card 1'
+
+- name: install cadence systemd unit file
+  template:
+    src: cadence.j2
+    dest: /etc/systemd/system/cadence.service
+
+- name: start cadence
+  systemd:
+    name: cadence
+    enabled: yes
+    state: started
+    daemon_reload: yes
