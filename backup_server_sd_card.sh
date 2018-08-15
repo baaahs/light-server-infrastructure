@@ -8,4 +8,4 @@ diskutil unmountDisk /dev/$device
 write_location=~/baaahs_lights_server_`date +%d%m%Y`.img
 echo
 echo "Writing compressed image to $write_location"
-dd bs=1m if=/dev/r$device | gzip > $write_location
+sudo dd bs=1m if=/dev/r$device | gzip > $write_location
